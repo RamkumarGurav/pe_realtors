@@ -759,6 +759,7 @@ class Property_module extends Main
 
 			// Set success message if update is successful
 			if (!empty($insertStatus)) {
+				$this->upload_cover_image("property", "id", $id, "cover_image", "cover_image", "cover_image_", "property/cover_image");
 				$alert_message = '<div class="alert alert-success alert-dismissible"><button type="button" 
 				class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-check">
 				</i> Record Updated Successfully </div>';
@@ -768,7 +769,7 @@ class Property_module extends Main
 		} else {
 			$enter_data['added_on'] = date("Y-m-d H:i:s");
 			$enter_data['added_by'] = $this->data['session_auid'];
-			$insertStatus = $id = $this->Common_model->add_operation(array('table' => 'property', 'data' => $enter_data));
+			$id = $insertStatus = $this->Common_model->add_operation(array('table' => 'property', 'data' => $enter_data));
 
 			// Set success message if insert is successful
 			if (!empty($insertStatus)) {
@@ -777,6 +778,7 @@ class Property_module extends Main
 				$custom_id_data['property_custom_id'] = "PER-Prop-" . $serial_number;
 				$this->Common_model->update_operation(array('table' => 'property', 'data' => $custom_id_data, 'condition' => "id = $id"));
 
+				$this->upload_cover_image("property", "id", $id, "cover_image", "cover_image", "cover_image_", "property/cover_image");
 				$alert_message = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-check"></i> New Record Added Successfully </div>';
 			}
 		}
@@ -864,6 +866,33 @@ class Property_module extends Main
 		}
 	}
 
+
+
+	function upload_cover_image($table_name, $id_column, $id, $input_name, $target_column, $prefix, $target_folder_name)
+	{
+		$file_name = "";
+		if (isset($_FILES[$input_name]['name'])) {
+			$timg_name = $_FILES[$input_name]['name'];
+			if (!empty($timg_name)) {
+				$temp_var = explode(".", strtolower($timg_name));
+				$timage_ext = end($temp_var);
+				$timage_name_new = $prefix . $id . "." . $timage_ext;
+				$image_enter_data[$target_column] = $timage_name_new;
+				$image_enter_data['cover_image_title'] = trim($_POST['cover_image_title']);
+				$image_enter_data['cover_image_alt_title'] = trim($_POST['cover_image_alt_title']);
+				$imginsertStatus = $this->Common_model->update_operation(array('table' => $table_name, 'data' => $image_enter_data, 'condition' => "$id_column = $id"));
+				if ($imginsertStatus == 1) {
+					if (!is_dir(_uploaded_temp_files_ . $target_folder_name)) {
+						mkdir(_uploaded_temp_files_ . './' . $target_folder_name, 0777, TRUE);
+
+					}
+					move_uploaded_file($_FILES["$input_name"]['tmp_name'], _uploaded_temp_files_ . $target_folder_name . "/" . $timage_name_new);
+					$file_name = $timage_name_new;
+				}
+
+			}
+		}
+	}
 
 
 
