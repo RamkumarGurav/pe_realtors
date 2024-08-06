@@ -1,7 +1,4 @@
 <?php
-$page_module_name = "Location";
-?>
-<?php
 $location_name = "";
 $pincode = "";
 $location_id = 0;
