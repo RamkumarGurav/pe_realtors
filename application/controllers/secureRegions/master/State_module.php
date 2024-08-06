@@ -357,7 +357,7 @@ class State_module extends Main
 		$country_id = 1;
 		$status = $_POST['status'];
 		$is_display = $_POST['is_display'];
-		$is_exist = $this->Common_model->get_data(array('select' => '*', 'from' => 'state', 'where' => "state_name = '$state_name' and state_id != $state_id and country_id = $country_id"));
+		$is_exist = $this->Common_model->get_data(array('select' => '*', 'from' => 'state', 'where' => "state_name = \"$state_name\" and state_id != $state_id and country_id = $country_id"));
 		//	echo $this->db->last_query();
 		//	print_r($is_exist);
 		if (!empty($is_exist)) {

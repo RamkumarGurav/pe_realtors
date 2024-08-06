@@ -225,7 +225,7 @@ $page_module_name = "State";
                                         class="fas fa-ban"></i> Block</button>
                             <?php } ?>
                             <?php
-                            if ($user_access->export_data == 1) {
+                            if ($user_access->export_data == 1 && false) {
                                 ?>
                                 <button type="button" class="btn btn-success btn-sm export_excel"><i
                                         class="fas fa-file-excel"></i> Export</button>

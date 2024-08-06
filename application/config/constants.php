@@ -7,9 +7,9 @@ $ark_root .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT
 
 
 ////project details
-define('_project_name_', "perealtors");//this is used in 
-define('_project_name_for_web_title_', "perealtors"); # to display
-define('_project_complete_name_', "perealtors"); # to display
+define('_project_name_', "Pearealtors");//this is used in 
+define('_project_name_for_web_title_', "Pearealtors"); # to display
+define('_project_complete_name_', "Pearealtors"); # to display
 define('_brand_name_', "PRS");//need in left_nav
 define('_summernote_', "");//need in left_nav
 // define('_project_address_', "MPP Complex, Shop No. 14 15 Siddipet Road Ramayampet Medak, Telangana, 502101 India.");

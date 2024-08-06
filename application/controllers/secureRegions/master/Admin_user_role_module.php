@@ -451,7 +451,7 @@ class Admin_user_role_module extends Main
 				array(
 					'select' => '*',
 					'from' => 'admin_user_role',
-					'where' => "admin_user_role_name = '$admin_user_role_name' and admin_user_role_id != $admin_user_role_id"
+					'where' => "admin_user_role_name = \"$admin_user_role_name\" and admin_user_role_id != $admin_user_role_id"
 
 				)
 			);
