@@ -76,7 +76,104 @@ class Ajax extends main
 		echo $show;
 	}
 
+	function get_property_sub_type()
+	{
+
+	
+		$property_type_id = $_POST['property_type_id'];
+		$property_sub_type_id = '';
+		if (!empty($_POST['property_sub_type_id'])) {
+			$property_sub_type_id = $_POST['property_sub_type_id'];
+		}
+		$property_sub_type_data = $this->Ajax_model->get_property_sub_type_data(array("property_type_id" => $property_type_id));
+		$show = "<option value=''>Select Property Sub Type</option>";
+		if (!empty($property_type_id)) {
+			if (!empty($property_sub_type_data)) {
+				foreach ($property_sub_type_data as $item) {
+					$selected = '';
+					if ($item->id == $property_sub_type_id)
+						$selected = 'selected';
+					$show .= "<option $selected value='$item->id'>$item->name</option>";
+				}
+			}
+		}
+		echo $show;
+	}
 
 
+	function get_dropdown()
+	{
+		$primary_column_name = $_POST['primary_column_name'];
+		$primary_column_value = $_POST['primary_column_value'];
+		$foreign_column_name = $_POST['foreign_column_name'];
+		$foreign_column_value = $_POST['foreign_column_value'];
+		$showable_column_name = $_POST['showable_column_name'];
+		$table_name = $_POST['table_name'];
+		$select_title = $_POST['select_title'];
+
+		$dropdown_data = $this->Ajax_model->get_dropdown_data(
+			array(
+				"table_name" => $table_name,
+				"foreign_column_name" => $foreign_column_name,
+				"foreign_column_value" => $foreign_column_value,
+				"showable_column_name" => $showable_column_name
+			)
+		);
+		$show = "<option value=''>" . $select_title . "</option>";
+		if (!empty($foreign_column_value)) {
+			if (!empty($dropdown_data)) {
+				foreach ($dropdown_data as $item) {
+					$selected = '';
+					if ($item->$primary_column_name == $primary_column_value)
+						$selected = 'selected';
+					$show .= "<option $selected value='$item->id'>$item->$showable_column_name</option>";
+				}
+			}
+		}
+		echo $show;
+	}
+
+
+	function get_dropdown2()
+	{
+		// Retrieve and sanitize POST data
+		$primary_column_name = $this->input->post('primary_column_name', true);
+		$primary_column_value = $this->input->post('primary_column_value', true);
+		$foreign_column_name = $this->input->post('foreign_column_name', true);
+		$foreign_column_value = $this->input->post('foreign_column_value', true);
+		$showable_column_name = $this->input->post('showable_column_name', true);
+		$table_name = $this->input->post('table_name', true);
+		$select_title = $this->input->post('select_title', true);
+
+		// Check if required fields are provided
+		if (empty($table_name) || empty($foreign_column_name) || empty($showable_column_name) || empty($select_title)) {
+			echo "<option value=''>Invalid parameters provided</option>";
+			return;
+		}
+
+		// Fetch dropdown data
+		$dropdown_data = $this->Ajax_model->get_dropdown_data(
+			array(
+				"table_name" => $table_name,
+				"foreign_column_name" => $foreign_column_name,
+				"foreign_column_value" => $foreign_column_value,
+				"showable_column_name" => $showable_column_name
+			)
+		);
+
+		// Start building the dropdown options
+		$options = ["<option value=''>" . htmlspecialchars($select_title, ENT_QUOTES, 'UTF-8') . "</option>"];
+
+		// Add options if dropdown data is available
+		if (!empty($dropdown_data)) {
+			foreach ($dropdown_data as $item) {
+				$selected = ($item->$primary_column_name == $primary_column_value) ? 'selected' : '';
+				$options[] = "<option $selected value='" . htmlspecialchars($item->id, ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($item->$showable_column_name, ENT_QUOTES, 'UTF-8') . "</option>";
+			}
+		}
+
+		// Output the dropdown options
+		echo implode('', $options);
+	}
 
 }

@@ -40,6 +40,27 @@
   </script>
 </head>
 
+<style>
+  .custom-file-label.form-control-sm::after {
+    height: 1.8rem;
+    padding: .2rem 0.75rem;
+    height: 30px !important;
+    line-height: 1.8em !important;
+  }
+
+  .custom-file-label {
+    margin-bottom: 0;
+    margin-top: 0 !important;
+    height: 31px !important;
+  }
+
+  input[type="file"] {
+    display: block;
+    height: calc(1.8125rem + 2px);
+    height: 50px;
+  }
+</style>
+
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed pace-primary"
   data-scrollbar-auto-hide="n">
   <div class="wrapper">

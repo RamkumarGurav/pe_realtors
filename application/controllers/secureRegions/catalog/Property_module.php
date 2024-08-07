@@ -15,7 +15,7 @@ class Property_module extends Main
 		$this->load->helper('url');
 
 		$this->load->model('Common_model');
-		$this->load->model('secureRegions/master/Property_model');
+		$this->load->model('secureRegions/catalog/Property_model');
 
 		$this->load->library('pagination');
 
@@ -66,7 +66,7 @@ class Property_module extends Main
 	{
 		parent::get_header();
 		parent::get_left_nav();
-		$this->load->view('secureRegions/master/Property_module/list', $this->data);
+		$this->load->view('secureRegions/catalog/Property_module/list', $this->data);
 		parent::get_footer();
 	}
 
@@ -311,14 +311,14 @@ class Property_module extends Main
 		$search['offset'] = $offset;
 
 		// $this->data['country_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'country', 'where' => "country_id > 0", "order_by" => "country_name ASC"));
-		$this->data['state_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'state', 'where' => "state_id > 0", "order_by" => "country_name ASC"));
+		$this->data['state_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'state', 'where' => "state_id > 0", "order_by" => "state_name ASC"));
 		$this->data['property_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'property_type', 'where' => "id > 0", "order_by" => "name ASC"));
 
 		$this->data['property_data'] = $this->Property_model->get_property_data($search);
 
 		parent::get_header();
 		parent::get_left_nav();
-		$this->load->view('secureRegions/master/Property_module/list', $this->data);
+		$this->load->view('secureRegions/catalog/Property_module/list', $this->data);
 		parent::get_footer();
 	}
 
@@ -531,7 +531,7 @@ class Property_module extends Main
 		$this->data['property_data'] = $this->Property_model->get_property_data($search);
 
 
-		$this->load->view('secureRegions/master/Property_module/list_export', $this->data);
+		$this->load->view('secureRegions/catalog/Property_module/list_export', $this->data);
 	}
 
 
@@ -604,6 +604,18 @@ class Property_module extends Main
 		$this->data['page_parent_module_id'] = $this->data['user_access']->parent_module_id;
 
 
+		$this->data['country_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'country', 'where' => "country_id > 0", "order_by" => "country_name ASC"));
+		$this->data['state_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'state', 'where' => "state_id > 0", "order_by" => "state_name ASC"));
+		$this->data['city_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'city', 'where' => "city_id > 0", "order_by" => "city_name ASC"));
+		$this->data['location_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'location', 'where' => "location_id > 0", "order_by" => "location_name ASC"));
+		$this->data['property_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'property_type', 'where' => "id > 0", "order_by" => "name ASC"));
+		$this->data['property_sub_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'property_sub_type', 'where' => "id > 0", "order_by" => "name ASC"));
+		$this->data['property_age_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'property_age', 'where' => "id > 0", "order_by" => "name ASC"));
+		$this->data['facing_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'facing_type', 'where' => "id > 0", "order_by" => "name ASC"));
+		$this->data['bhk_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'bhk_type', 'where' => "id > 0", "order_by" => "name ASC"));
+		$this->data['gated_community_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'gated_community_type', 'where' => "id > 0", "order_by" => "name ASC"));
+
+
 
 		if (!empty($id)) {
 			$this->data['property_data'] = $this->Property_model->get_property_data(array("id" => $id));
@@ -633,7 +645,7 @@ class Property_module extends Main
 
 		// Validate essential form fields; if empty, set an error message and redirect
 		if (
-			empty($_POST['title']) && empty($_POST['property_type_id']) && empty($_POST['property_sub_type_id_id'])
+			empty($_POST['name']) && empty($_POST['property_type_id']) && empty($_POST['property_sub_type_id']) && empty($_POST['property_age_id'])
 			&& empty($_POST['state_id']) && empty($_POST['city_id']) && empty($_POST['location_id'])
 		) {
 			$alert_message = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close"
@@ -669,7 +681,7 @@ class Property_module extends Main
 		}
 
 		$sl_no = trim($_POST['sl_no']);
-		$title = getCleanText(trim($_POST['title']));
+		$name = getCleanText(trim($_POST['name']));
 		$property_type_id = trim($_POST['property_type_id']);
 		$property_sub_type_id = trim($_POST['property_sub_type_id']);
 		$property_custom_id = trim($_POST['property_custom_id']);
@@ -702,7 +714,7 @@ class Property_module extends Main
 		$status = trim($_POST['status']);
 
 		// Check if a property with the same name already exists in the same country and state but with a different id
-		$is_exist = $this->Common_model->get_data(array('select' => '*', 'from' => 'property', 'where' => "title = \"$title\" and id != $id and country_id = $country_id and state_id = $state_id"));
+		$is_exist = $this->Common_model->get_data(array('select' => '*', 'from' => 'property', 'where' => "title = \"$name\" and city_id = $city_id and state_id = $state_id and location_id = $location_id and id != $id "));
 
 		// If the property exists, set an error message and redirect to the edit page
 		if (!empty($is_exist)) {
@@ -714,7 +726,7 @@ class Property_module extends Main
 
 		// Prepare data for insertion or update
 		$enter_data['sl_no'] = trim($_POST['sl_no']);
-		$enter_data['title'] = getCleanText(trim($_POST['title']));
+		$enter_data['name'] = getCleanText(trim($_POST['name']));
 		$enter_data['property_type_id'] = trim($_POST['property_type_id']);
 		$enter_data['property_sub_type_id'] = trim($_POST['property_sub_type_id']);
 		$enter_data['property_custom_id'] = trim($_POST['property_custom_id']);
@@ -777,7 +789,6 @@ class Property_module extends Main
 				$custom_id_data['sl_no'] = $serial_number;
 				$custom_id_data['property_custom_id'] = "PER-Prop-" . $serial_number;
 				$this->Common_model->update_operation(array('table' => 'property', 'data' => $custom_id_data, 'condition' => "id = $id"));
-
 				$this->upload_cover_image("property", "id", $id, "cover_image", "cover_image", "cover_image_", "property/cover_image");
 				$alert_message = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-check"></i> New Record Added Successfully </div>';
 			}
@@ -907,17 +918,52 @@ class Property_module extends Main
 
 
 
+	function add_input_fields()
+	{
+		$id = 0;
+		if (!empty($_POST['id'])) {
+			$id = $_POST['id'];
+		}
+
+		$property_type_id = 0;
+		if (!empty($_POST['property_type_id'])) {
+			$property_type_id = $_POST['property_type_id'];
+		}
+
+		$this->data['property_type_id'] = $property_type_id;
+
+		$this->data['facing_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'facing_type', 'where' => "id > 0", "order_by" => "name ASC"));
+		$this->data['bhk_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'bhk_type', 'where' => "id > 0", "order_by" => "name ASC"));
+		$this->data['gated_community_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'gated_community_type', 'where' => "id > 0", "order_by" => "name ASC"));
+
+		if (!empty($id)) {
+			$this->data['property_data'] = $this->Property_model->get_property_data(array("id" => $id));
+			if (empty($this->data['property_data'])) {
+				$this->session->set_flashdata('alert_message', '<div class="alert alert-danger alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<i class="icon fas fa-ban"></i> Record Not Found. 
+				  </div>');
+				// REDIRECT(MAINSITE_Admin . $user_access->class_name . '/' . $user_access->function_name);
+			}
+			$this->data['property_data'] = $this->data['property_data'][0];
+		}
+
+		$html_data = $this->load->view('secureRegions/catalog/Property_module/template/add_input_fields', $this->data, true);
+
+		echo json_encode(array("html_data" => $html_data));
+	}
+
 
 	function upload_multi_files_normal_pgi($idf)
 	{
 
-		$table_name = "project_gallery_image";
-		$idp_column = "project_gallery_image_id";
-		$idf_column = "project_id";
+		$table_name = "property_gallery_image";
+		$idp_column = "property_gallery_image_id";
+		$idf_column = "property_id";
 		$input_file_name = "image";
 		$target_file_column = "file";
-		$prefix = "project_gallery_image_";
-		$target_folder_name = "project_gallery_image";
+		$prefix = "property_gallery_image_";
+		$target_folder_name = "property_gallery_image";
 		$logo_file_name = "";
 		$count = 0;
 
@@ -1005,5 +1051,127 @@ class Property_module extends Main
 	}
 
 
+
+
+
+	function setPositionsPropertyGalleryImage($property_id = "")
+	{
+
+
+
+		$search["property_id"] = $property_id;
+		$this->data['property_data'] = $this->Property_model->get_property_data($search)[0];
+
+		$this->data['property_gallery_image_data'] = $this->Property_model->get_property_gallery_image_data($search);
+
+		$this->data['property_id'] = $property_id;
+
+		parent::get_header();
+		parent::get_left_nav();
+		$this->load->view('admin/catalog/Property_module/pgi_position', $this->data);
+		parent::get_footer();
+	}
+	function GetCompletePropertyGalleryImageList($property_gallery_image_id = '', $withPosition = '', $sortByPosition = '')
+	{
+
+		$search = array();
+		if (!empty($_POST['property_gallery_image_id'])) {
+			$property_gallery_image_id = $_POST['property_gallery_image_id'];
+		}
+		if (!empty($_POST['property_id'])) {
+			$property_id = $_POST['property_id'];
+		}
+		if (!empty($_POST['withPosition'])) {
+			$withPosition = $_POST['withPosition'];
+		}
+		if (!empty($_POST['sortByPosition'])) {
+			$sortByPosition = $_POST['sortByPosition'];
+		}
+
+		$search['property_gallery_image_id'] = $property_gallery_image_id;
+		$search['property_id'] = $property_id;
+		$search['withPosition'] = $withPosition;
+		$search['sortByPosition'] = $sortByPosition;
+		$data['property_gallery_image_list'] = $this->Property_model->get_property_gallery_image_data($search);
+
+		// print_r($data['property_gallery_image_list']);
+		$show = '';
+		$count = 0;
+		foreach ($data['property_gallery_image_list'] as $row) {
+
+
+			$row = (array) $row;
+			$count++;
+			$link = MAINSITE_Admin . "catalog/Property-Module/property_view/" . $row['property_gallery_image_id'];
+			$link1 = MAINSITE_Admin . "catalog/Property-Module/property_edit/" . $row['property_gallery_image_id'];
+			if ($row['updated_on'] != '0000-00-00 00:00:00') {
+				$updated_on = date('d-m-Y', strtotime($row['updated_on']));
+			} else {
+				$updated_on = 'N/A';
+			}
+
+
+			$image_link = _uploaded_files_ . 'property_gallery_image/' . $row["file"];
+			$show .= "<tr id='$row[property_gallery_image_id]'>";
+			$show .= "<td>$count</td>";
+			$show .= "<td><a href='$image_link'
+														target='_blank'><img
+															src='$image_link'
+															alt='' width='120' height='60' border='0' /></a></td>";
+			if ($withPosition == 1) {
+				$show .= '<td><span style="cursor: move;" class="fa fa-arrows-alt" ></span> ' . $row['position'] . '</td>';
+			}
+			if ($row['status']) {
+				$show .= "<td class='nodrag' align='center'><i class='fa fa-check true-icon'></i><span style='display:none'>Publish</span></td>";
+			} else {
+				$show .= "<td align='center'><i class='fa fa-close false-icon'></i><span style='display:none'>Un Publish</span></td>";
+			}
+			$show .= "<td>" . date('d-m-Y', strtotime($row['added_on'])) . "</td>";
+			$show .= "<td><button class='btn btn-outline-danger btn-xs'
+																	onclick='return del_pgi(`$row[property_gallery_image_id]`)' title='remove'><i
+																		class='fas fa-trash'></i></button></td>";
+			$show .= '</tr>';
+		}
+		echo $show;
+	}
+
+	function GetCompletePropertyGalleryImageListNewPos()
+	{
+		$search = array();
+		$property_gallery_image_id = '';
+		$property_id = '';
+		$podId = '';
+		$podIdArr = '';
+		if (!empty($_POST['property_gallery_image_id']))
+			$property_gallery_image_id = $_POST['property_gallery_image_id'];
+		if (!empty($_POST['property_id']))
+			$property_id = $_POST['property_id'];
+
+		if (!empty($_POST['podId'])) {
+			$podId = trim($_POST['podId'], ',');
+			$podIdArr = explode(',', $podId);
+		}
+		$this->data['property_gallery_image_id'] = $property_gallery_image_id;
+		$this->data['property_id'] = $property_id;
+		$this->data['podId'] = $podIdArr;
+		$search['property_gallery_image_id'] = $property_gallery_image_id;
+		$search['property_id'] = $property_id;
+		$search['podId'] = $podIdArr;
+		$search['search_for'] = "count";
+		$show = "No Record To Display";
+		$property_gallery_image_list = $this->Property_model->get_property_gallery_image_data($search);
+		$count = 0;
+		$countPos = 0;
+		foreach ($podIdArr as $row) {
+			$countPos++;
+			$update_data['position'] = $countPos;//$podIdArr[$count];	
+			$condition = "(property_gallery_image_id in ($podIdArr[$count]))";
+			//$insertStatus = $this->Admin_Model->update($update_data,'category','' , $condition); //echo $insertStatus;
+			$insertStatus = $this->Common_Model->update_operation(array('table' => 'property_gallery_image', 'data' => $update_data, 'condition' => $condition));
+			//echo $this->db->last_query().'<br><br><br><br><br>';
+			$count++;
+		}
+		$this->GetCompletePropertyGalleryImageList($property_gallery_image_id, 1, 1);
+	}
 
 }

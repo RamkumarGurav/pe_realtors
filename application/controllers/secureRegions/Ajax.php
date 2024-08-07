@@ -23,6 +23,7 @@ class Ajax extends Main
 		$this->load->model('secureRegions/Admin_common_model');
 		$this->load->model('secureRegions/Admin_model');
 		// $this->load->model('secureRegions/Ajax_model');
+		$this->load->model('Ajax_model');
 
 		//session data
 		$session_auid = $this->data['session_auid'] = $this->session->userdata('session_auid');
@@ -161,6 +162,108 @@ class Ajax extends Main
 			}
 		}
 		echo json_encode(array("city_html" => $result, "city_json" => $city_data));
+	}
+
+
+
+	function get_property_sub_type()
+	{
+		$property_type_id = $property_sub_type_id = '0';
+		if (!empty($_POST['property_sub_type_id'])) {
+			$property_sub_type_id = $_POST['property_sub_type_id'];
+		}
+		if (!empty($_POST['property_type_id'])) {
+			$property_type_id = $_POST['property_type_id'];
+		}
+
+		$property_sub_type_data = $this->Common_model->get_data(array('select' => '*', 'from' => 'property_sub_type', 'where' => "property_type_id = $property_type_id", "order_by" => "name ASC"));
+		$result = '<option value="">Select Property_sub_type</option>';
+		if (!empty($property_sub_type_data)) {
+			foreach ($property_sub_type_data as $item) {
+				$if_block = $selected = '';
+				if ($item->id == $property_sub_type_id) {
+					$selected = "selected";
+				}
+				if ($item->status != 1) {
+					$if_block = " [Block]";
+				}
+				$result .= '<option value="' . $item->id . '" ' . $selected . '>' . $item->name . $if_block . '</option>';
+			}
+		}
+		echo json_encode(array("property_sub_type_html" => $result, "property_sub_type_json" => $property_sub_type_data));
+	}
+
+
+
+	function get_dropdown()
+	{
+
+		$primary_column_name = "";
+		$primary_column_value = 0;
+		$foreign_column_name = "";
+		$foreign_column_value = 0;
+		$showable_column_name = "";
+		$table_name = "";
+		$select_title = "";
+
+		if (!empty($_POST['primary_column_name'])) {
+			$primary_column_name = $_POST['primary_column_name'];
+		}
+		if (!empty($_POST['primary_column_value'])) {
+			$primary_column_value = $_POST['primary_column_value'];
+		}
+		if (!empty($_POST['foreign_column_name'])) {
+			$foreign_column_name = $_POST['foreign_column_name'];
+		}
+		if (!empty($_POST['foreign_column_value'])) {
+			$foreign_column_value = $_POST['foreign_column_value'];
+		}
+		if (!empty($_POST['showable_column_name'])) {
+			$showable_column_name = $_POST['showable_column_name'];
+		}
+		if (!empty($_POST['table_name'])) {
+			$table_name = $_POST['table_name'];
+		}
+		if (!empty($_POST['select_title'])) {
+			$select_title = $_POST['select_title'];
+		}
+
+		// $dropdown_data = $this->Common_model->get_data(array('select' => '*', 'from' => '' . $table_name . '', 'where' => "$foreign_column_name = $foreign_column_value", "order_by" => '' . $showable_column_name . ' ASC'));
+
+		// $dropdown_data = $this->Common_model->get_data_new(
+		// 	array(
+		// 		'select' => '*',
+		// 		'from' => 'property_sub_type',
+		// 		'where' => array($foreign_column_name => $foreign_column_value),
+		// 		'order_by' => $showable_column_name . ' ASC'
+		// 	)
+		// );
+
+		$dropdown_data = $this->Common_model->get_dropdown_data(
+			array(
+				"table_name" => $table_name,
+				"foreign_column_name" => $foreign_column_name,
+				"foreign_column_value" => $foreign_column_value,
+				"showable_column_name" => $showable_column_name
+			)
+		);
+
+		$result = '<option value="">' . $select_title . '</option>';
+		if (!empty($dropdown_data)) {
+			foreach ($dropdown_data as $item) {
+				$if_block = $selected = '';
+				if ($item->$primary_column_name == $primary_column_value) {
+					$selected = "selected";
+				}
+				if ($item->status != 1) {
+					$if_block = " [Block]";
+				}
+				$result .= '<option value="' . $item->$primary_column_name . '" ' . $selected . '>' . $item->$showable_column_name . $if_block . '</option>';
+			}
+		}
+
+
+		echo json_encode(array("dropdown_html" => $result, "dropdown_json" => $dropdown_data));
 	}
 
 	function del_employee_file()

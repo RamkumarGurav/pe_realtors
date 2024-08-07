@@ -103,6 +103,75 @@ class Common_model extends CI_Model
 	}
 
 
+
+
+
+
+	function get_dropdown_data($params = array())
+	{
+		// Extract parameters with default values
+		$table_name = isset($params['table_name']) ? $params['table_name'] : '';
+		$foreign_column_name = isset($params['foreign_column_name']) ? $params['foreign_column_name'] : '';
+		$foreign_column_value = isset($params['foreign_column_value']) ? $params['foreign_column_value'] : '';
+
+
+		$showable_column_name = isset($params['showable_column_name']) ? $params['showable_column_name'] : "name";
+
+		// Check if table name is provided
+		if (empty($table_name)) {
+			return false;
+		}
+
+		// Start building the query
+		$this->db->select('ft.*');
+		$this->db->from($table_name . ' as ft');
+		$this->db->where('ft.status', 1);
+		$this->db->order_by('ft.' . $showable_column_name . ' ASC');
+
+		// Add foreign column value condition if provided
+		if (!empty($foreign_column_name) && !empty($foreign_column_value)) {
+			$this->db->where('ft.' . $foreign_column_name, $foreign_column_value);
+		}
+
+		// Execute the query and return the result
+		$result = $this->db->get();
+		if ($result->num_rows() > 0) {
+			return $result->result();
+		} else {
+			return false;
+		}
+	}
+	function get_data_new($params = array())
+	{
+		// Set the SELECT part of the SQL query using the 'select' value from the $params array
+		$this->db->select($params['select']);
+
+		// Set the FROM part of the SQL query using the 'from' value from the $params array
+		$this->db->from($params['from']);
+
+		// Set the WHERE condition of the SQL query using the 'where' value from the $params array
+		if (!empty($params['where'])) {
+			$this->db->where($params['where']);
+		}
+
+		// If a 'limit' value is provided in the $params array, set the LIMIT part of the SQL query
+		if (!empty($params['limit'])) {
+			$this->db->limit($params['limit']);
+		}
+
+		// If an 'order_by' value is provided in the $params array, set the ORDER BY part of the SQL query
+		if (!empty($params['order_by'])) {
+			$this->db->order_by($params['order_by']);
+		}
+
+		// Execute the query and store the result in $query_get_list
+		$query_get_list = $this->db->get();
+
+		// Return the result of the query as an array of objects
+		return $query_get_list->result();
+	}
+
+
 	/**
 	 * Function to add a new record to the database which gives inserted record Id if success otherwise false
 	 *
@@ -346,19 +415,19 @@ class Common_model extends CI_Model
 		$post_data['v'] = "1.1";
 		$post_data['check_duplicate_post'] = "true";
 		/*foreach($post_data as $key=>$val) {
-																																								$request.= $key."=".urlencode($val);
-																																								$request.= "&";
-																																								}	*/
+																																																			$request.= $key."=".urlencode($val);
+																																																			$request.= "&";
+																																																			}	*/
 		$request = substr($request, 0, strlen($request) - 1);
 
 		/*$ch = curl_init();
-																																								curl_setopt($ch, CURLOPT_URL, $GATEWAYAPI);
-																																								curl_setopt($ch, CURLOPT_POST, 1);
-																																								curl_setopt($ch, CURLOPT_HEADER, 0);
-																																								curl_setopt($ch, CURLOPT_VERBOSE, 0);
-																																								curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-																																								curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-																																								if(curl_exec($ch) === false){*/
+																																																			curl_setopt($ch, CURLOPT_URL, $GATEWAYAPI);
+																																																			curl_setopt($ch, CURLOPT_POST, 1);
+																																																			curl_setopt($ch, CURLOPT_HEADER, 0);
+																																																			curl_setopt($ch, CURLOPT_VERBOSE, 0);
+																																																			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+																																																			curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+																																																			if(curl_exec($ch) === false){*/
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $GATEWAYAPI);
 		curl_setopt($ch, CURLOPT_POST, 1);
@@ -477,8 +546,8 @@ class Common_model extends CI_Model
 	}
 
 	/****************************************************************
-																																																		 
-																				 ****************************************************************/
+																																																								
+																										****************************************************************/
 
 	/****************************************************************
 	 ****************************************************************

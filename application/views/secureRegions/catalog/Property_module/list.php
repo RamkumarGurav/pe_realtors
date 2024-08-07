@@ -1,8 +1,3 @@
-<?php
-
-$page_module_name = "City";
-
-?>
 <!-- /.navbar -->
 
 <!-- Main Sidebar Container -->
@@ -62,10 +57,7 @@ $page_module_name = "City";
                                                         echo 'selected';
                                                     } ?>>City Name
                                                     </option>
-                                                    <option value='ft.city_code' <?php if ($field_name == 'ft.city_code') {
-                                                        echo 'selected';
-                                                    } ?>>City Code
-                                                    </option>
+
                                                 </select>
 
                                             </div>
@@ -261,46 +253,51 @@ $page_module_name = "City";
                                             <th width="4%"><input type="checkbox" name="main_check" id="main_check"
                                                     onclick="check_uncheck_All_records()" value="" /></th>
                                         <?php } ?>
-                                        <th>City</th>
-                                        <th>State</th>
-                                        <!-- <th>Country</th> -->
-                                        <!-- <th>City Code</th> -->
+                                        <th>Property Name</th>
+                                        <!-- <th>Cover Image</th> -->
+                                        <th>Type</th>
+                                        <th>Sub Type</th>
+                                        <th>Location</th>
+                                        <th>Age</th>
+                                        <th>Negatiable</th>
                                         <th>Display</th>
-                                        <th>Added On</th>
-                                        <th>Added By</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php if (!empty($city_data)) { ?>
+                                <?php if (!empty($property_data)) { ?>
                                     <tbody>
                                         <?php
                                         $offset_val = (int) $this->uri->segment(5);
 
                                         $count = $offset_val;
 
-                                        foreach ($city_data as $item) {
+                                        foreach ($property_data as $item) {
                                             $count++;
                                             ?>
                                             <tr>
                                                 <td><?php echo $count ?>.</td>
                                                 <?php if ($user_access->update_module == 1) { ?>
                                                     <td><input type="checkbox" name="sel_recds[]" id="sel_recds<?php echo $count; ?>"
-                                                            value="<?php echo $item->city_id; ?>" /></td>
+                                                            value="<?php echo $item->id; ?>" /></td>
                                                 <?php } ?>
                                                 <td><a
-                                                        href="<?php echo MAINSITE_Admin . $user_access->class_name . "/view/" . $item->city_id ?>"><?php echo $item->city_name ?></a>
-                                                </td>
-                                                <td><?php echo $item->state_name ?></td>
-                                                <!-- <td><?php echo $item->country_name ?></td> -->
-                                                <!-- <td><?php echo $item->city_code ?></td> -->
+                                                        href="<?php echo MAINSITE_Admin . $user_access->class_name . "/view/" . $item->id ?>"><?php echo $item->name ?></a>
+                                                            </td>
+                                                            <td><?php echo $item->property_type_name ?></td>
+                                                <td><?php echo $item->property_sub_type_name ?></td>
+                                                <td><?php echo $item->location_name ?></td>
                                                 <td>
                                                     <?php if ($item->is_display == 1) { ?> <i
                                                             class="fas fa-check btn-success btn-sm "></i>
                                                     <?php } else { ?><i class="fas fa-ban btn-danger btn-sm "></i>
                                                     <?php } ?>
                                                 </td>
-                                                <td><?php echo date("d-m-Y", strtotime($item->added_on)) ?></td>
-                                                <td><?php echo $item->added_by_name ?></td>
+                                                <td>
+                                                    <?php if ($item->is_negotiable == 1) { ?> <i
+                                                            class="fas fa-check btn-success btn-sm "></i>
+                                                    <?php } else { ?><i class="fas fa-ban btn-danger btn-sm "></i>
+                                                    <?php } ?>
+                                                </td>
                                                 <td>
                                                     <?php if ($item->status == 1) { ?> <i
                                                             class="fas fa-check btn-success btn-sm "></i>
