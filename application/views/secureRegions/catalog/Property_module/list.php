@@ -259,7 +259,7 @@
                                         <th>Sub Type</th>
                                         <th>Location</th>
                                         <th>Age</th>
-                                        <th>Negatiable</th>
+                                        <th>Negotiable</th>
                                         <th>Display</th>
                                         <th>Status</th>
                                     </tr>
@@ -282,10 +282,12 @@
                                                 <?php } ?>
                                                 <td><a
                                                         href="<?php echo MAINSITE_Admin . $user_access->class_name . "/view/" . $item->id ?>"><?php echo $item->name ?></a>
-                                                            </td>
-                                                            <td><?php echo $item->property_type_name ?></td>
+                                                </td>
+                                                <td><?php echo $item->property_type_name ?></td>
                                                 <td><?php echo $item->property_sub_type_name ?></td>
-                                                <td><?php echo $item->location_name ?></td>
+                                                <td><?php echo $item->location_name . ", " . $item->pincode . ", " . $item->city_name . ", " . $item->state_name ?>
+                                                </td>
+                                                <td><?php echo $item->property_age_name ?></td>
                                                 <td>
                                                     <?php if ($item->is_display == 1) { ?> <i
                                                             class="fas fa-check btn-success btn-sm "></i>

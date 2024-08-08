@@ -22,7 +22,13 @@
 
 
 
+
+
+$property_gallery_image_id = $property_id = 0;
+
+
 $record_action = "Add New Record";
+$record_action_type = "insert";
 $id = 0;
 $sl_no = "";
 $name = "";
@@ -42,9 +48,9 @@ $built_up_area = "";
 $in_acres = "";
 $in_guntas = "";
 $gated_community_type_id = 0;
-$is_rent_lease_sale = "";
+$sale_type = "";
 $sale_duration_type = "";
-$rent_lease_sale_amount = "";
+$sale_amount = "";
 $is_negotiable = 1;
 $is_display = "";
 $youtube_link = "";
@@ -62,6 +68,7 @@ $status = 1;
 if (!empty($property_data)) {
 
 	$record_action = "Update";
+	$record_action_type = "update";
 	$id = $property_data->id;
 	$sl_no = $property_data->sl_no;
 	$name = $property_data->name;
@@ -81,9 +88,9 @@ if (!empty($property_data)) {
 	$in_acres = $property_data->in_acres;
 	$in_guntas = $property_data->in_guntas;
 	$gated_community_type_id = $property_data->gated_community_type_id;
-	$is_rent_lease_sale = $property_data->is_rent_lease_sale;
+	$sale_type = $property_data->sale_type;
 	$sale_duration_type = $property_data->sale_duration_type;
-	$rent_lease_sale_amount = $property_data->rent_lease_sale_amount;
+	$sale_amount = $property_data->sale_amount;
 	$is_negotiable = $property_data->is_negotiable;
 	$is_display = $property_data->is_display;
 	$youtube_link = $property_data->youtube_link;
@@ -97,6 +104,22 @@ if (!empty($property_data)) {
 	$meta_description = $property_data->meta_description;
 	$status = $property_data->status;
 
+
+
+	$display_status_data = [
+		(object) ["name" => "No", "value" => 0],
+		(object) ["name" => "Yes", "value" => 1],
+	];
+	$sale_type_data = [
+		(object) ["name" => "Rent", "value" => 1],
+		(object) ["name" => "Lease", "value" => 2],
+		(object) ["name" => "Sale", "value" => 3],
+	];
+	$sale_duration_type_data = [
+		(object) ["name" => "Monthly", "value" => 1],
+		(object) ["name" => "Yearly", "value" => 2],
+		(object) ["name" => "Permanent Sale", "value" => 3],
+	];
 
 }
 
@@ -113,12 +136,12 @@ if (!empty($property_data)) {
 		$.ajax({
 			type: "POST",
 
-			url: '<? echo MAINSITE_Admin ?>catalog/Property-Module/GetCompletePropertyGalleryImageList',
+			url: '<? echo MAINSITE_Admin ?>catalog/Property-module/get_property_gallery_image_list',
 			//dataType : "json",
 			data: { "property_gallery_image_id": '<? echo $property_gallery_image_id; ?>', "property_id": '<? echo $property_id; ?>', "withPosition": 1, 'sortByPosition': 1, "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>" },
 			success: function (result) {
 				//   alert(result);
-				$('#propertyGalleryImageList').html(result);
+				$('#property_gallery_image_list').html(result);
 				//ArrangeTable();
 				dragEvent();
 			}
@@ -211,8 +234,8 @@ if (!empty($property_data)) {
 								)
 							); ?>
 							<input type="hidden" name="id" id="id" value="<?= $id ?>" />
-							<input type="hidden" name="sl_no" id="id" value="<?= $sl_no ?>" />
-							<input type="hidden" name="property_custom_id" id="id" value="<?= $property_custom_id ?>" />
+							<input type="hidden" name="sl_no" id="sl_no" value="<?= $sl_no ?>" />
+							<input type="hidden" name="property_custom_id" id="property_custom_id" value="<?= $property_custom_id ?>" />
 							<input type="hidden" name="redirect_type" id="redirect_type" value="" />
 
 
@@ -508,33 +531,49 @@ if (!empty($property_data)) {
 							<div class="form-group row">
 
 								<div class="col-md-4 col-sm-6">
-									<label for="inputEmail3" class="col-sm-12 label_content px-2 py-0">Rent or Sale or Lease ?<span
+									<label for="inputEmail3" class="col-sm-12 label_content px-2 py-0">Sale Type <span
 											style="color:#f00;font-size: 22px;margin-top: 3px;">*</span></label>
 									<div class="col-sm-10">
-										<select type="text" class="form-control form-control-sm" required id="is_display" name="is_display">
+										<select type="text" class="form-control form-control-sm" required id="sale_type" name="sale_type"
+											onchange="update_sale_duration()">
 											<option value="">Select Sale Type</option>
 
-											<option value="1">Rent
-											</option>
-											<option value="2">Lease
-											</option>
-											<option value="3">Sale
-											</option>
+											<?php foreach ($sale_type_data as $item) {
+												$selected = "";
+												if ($item->value == $sale_type) {
+													$selected = "selected";
+												}
+												?>
+												<option value="<?php echo $item->value ?>"  <?php echo $selected ?>>
+													<?php echo $item->name ?>
+
+												</option>
+											<?php } ?>
 										</select>
 									</div>
 								</div>
 
 								<div class="col-md-4 col-sm-6">
-									<label for="inputEmail3" class="col-sm-12 label_content px-2 py-0">Sale Duration<span
+									<label for="inputEmail3" class="col-sm-12 label_content px-2 py-0">Sale Duration Type<span
 											style="color:#f00;font-size: 22px;margin-top: 3px;">*</span></label>
 									<div class="col-sm-10">
-										<select type="text" class="form-control form-control-sm" required id="is_display" name="is_display">
+										<select type="text" class="form-control form-control-sm" required id="sale_duration_type"
+											name="sale_duration_type">
 											<option value="">Select Sale Duration Type</option>
-											<option value="1">Monthly
-											</option>
-											<option value="2">Yearly
-											</option>
-											<option value="3">Permanent Sale
+											<?php foreach ($sale_duration_type_data as $item) {
+												$selected = "";
+												if ($item->value == $sale_duration_type) {
+													$selected = "selected";
+												}
+												?>
+												<option value="<?php echo $item->value ?>"
+												class="<?= $item->value == 3 ? "d-none" : "" ?>"
+												<?php echo $selected ?>>
+													<?php echo $item->name ?>
+
+												</option>
+											<?php } ?>
+											<!-- <option style="display:none;" value="3">Permanent Sale -->
 											</option>
 										</select>
 									</div>
@@ -544,9 +583,9 @@ if (!empty($property_data)) {
 									<label for="name" class="col-sm-12 label_content px-2 py-0">Sale Amount <span
 											style="color:#f00;font-size: 22px;margin-top: 3px;">*</span></label>
 									<div class="col-sm-12">
-										<input type="number" class="form-control form-control-sm" required id="rent_lease_sale_amount"
-											name="rent_lease_sale_amount" value="<?= $rent_lease_sale_amount ?>"
-											placeholder="Rent/Lease/Sale Amount">
+										<input type="text" pattern="^\d+(\.\d{1,2})?$" title="A positive number with up to two decimal places"
+											class="form-control form-control-sm" required id="sale_amount" name="sale_amount"
+											value="<?= $sale_amount ?>" placeholder="Rent/Lease/Sale Amount">
 									</div>
 								</div>
 
@@ -585,20 +624,25 @@ if (!empty($property_data)) {
 							<div class="form-group row">
 								<div class="col-md-4 col-sm-6">
 									<label for="inputEmail3" class="col-sm-12 label_content px-2 py-0">Cover Image <span
-											style="color:#f00;font-size: 22px;margin-top: 3px;"></span></label>
+											style="color:#f00;font-size: 22px;margin-top: 3px;">*</span></label>
 									<div class="col-sm-12 d-flex">
 										<div class="input-group" style="width:90%">
 											<div class="custom-file">
-												<input type="file" name="cover_image" class="custom-file-input" id="cover_image" accept="image/*">
+												<input type="file" name="cover_image" class="custom-file-input" 
+												
+												<?= $record_action_type=="insert"?"required":"" ?>
+												
+												id="cover_image"
+													accept="image/*">
 												<label class="custom-file-label form-control-sm" for="files"></label>
 											</div>
 										</div>
 										<div class="custom-file-display custom-file-display1">
 											<?php if (!empty($cover_image)) { ?>
 												<span class="pip pip1">
-													<a target="_blank" href="<?php echo _uploaded_files_ . 'property/cover_image/' . $cover_image ?>">
+													<a target="_blank" href="<?php echo _uploaded_files_ . 'property_cover_image/' . $cover_image ?>">
 														<img class="imageThumb imageThumb1"
-															src="<?php echo _uploaded_files_ . 'property/cover_image/' . $cover_image ?>" />
+															src="<?php echo _uploaded_files_ . 'property_cover_image/' . $cover_image ?>" />
 													</a>
 												</span>
 											<?php } else { ?>
@@ -638,7 +682,9 @@ if (!empty($property_data)) {
 											style="color:#f00;font-size: 22px;margin-top: 3px;">*</span></label>
 									<div class="col-sm-12">
 										<input type="text" class="form-control form-control-sm" required id="slug_url" name="slug_url"
-											value="<?= $slug_url ?>" placeholder="Slug URL">
+											pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
+											title="Slug URL can only contain lowercase letters, numbers, and hyphens." value="<?= $slug_url ?>"
+											placeholder="Slug URL">
 									</div>
 								</div>
 
@@ -729,40 +775,7 @@ if (!empty($property_data)) {
 												</tr>
 											</tfoot>
 										</table>
-										<?php if (!empty($property_data->property_gallery_image)) { ?>
-											<div class="card-body p-0 " style="width:90% !important">
-												<table class="table table-sm">
-													<thead>
-														<tr>
-															<th colspan="2" style="padding: 10px 5px;"><a data-target="#uploadImg_pgi"
-																	data-toggle="collapse" class="collapsed uploadImgClick uploadImgClick2">Uploaded Images
-																	<span class="bg-primary fa fa-chevron-down"></span></a></th>
-														</tr>
-													</thead>
-													<tbody class="collapse" id="uploadImg_pgi">
-														<?php foreach ($property_data->property_gallery_image as $item) { ?>
-															<tr id="gi<?= $item->id ?>">
-																<td><?= !empty($item->position) ? $item->file_title : "NO Title" ?></td>
-																<td><?= !empty($item->position) ? $item->file_alt_title : "No Alt Title" ?></td>
-																<td><span class="">
-																		<a target="_blank"
-																			href="<?= _uploaded_files_ . 'property_gallery_image/' . $item->file_name ?>">
-																			<img class="imageThumb imageThumb2"
-																				src="<?= _uploaded_files_ . 'property_gallery_image/' . $item->name ?>" />
-																		</a>
-																	</span></td>
-																<td><button class=" btn btn-outline-danger btn-xs"
-																		onclick="return del_pgi('<?= $item->id ?>')" title="remove"><i
-																			class="fas fa-trash"></i></button></td>
-															</tr>
-														<?php } ?>
-														<tr>
-															<td colspan="2"></td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										<?php } ?>
+									
 									</div>
 
 								</div>
@@ -772,7 +785,7 @@ if (!empty($property_data)) {
 
 							<?php if (!empty($property_data->property_gallery_image)) { ?>
 								<div class="form-group row">
-									<label for="slug_url" class="col-sm-12 label_content px-2 py-0">Uploaded Property Images </label>
+									<label for="slug_url" class="col-sm-12 label_content px-2 py-0">Uploaded Gallery Images </label>
 									<div class="col-sm-12">
 										<div class="row card">
 											<div class="col-md-12 card-body ">
@@ -792,10 +805,11 @@ if (!empty($property_data)) {
 																		<th>Image Title</th>
 																		<th>Image Alt Title</th>
 																		<th>Position</th>
+																		<th>Status</th>
 																		<th>Delete</th>
 																	</tr>
 																</thead>
-																<tbody id="propertyGalleryImageList">
+																<tbody id="property_gallery_image_list">
 
 
 																	<tr>
@@ -834,15 +848,15 @@ if (!empty($property_data)) {
 																			podId += rows[i].id + ",";
 																		}
 
-																		$('#propertyGalleryImageList').html('<tr><td colspan="10"> <div class="clearfix text-center" ><img  src="<? echo MAINSITE . "assets/admin/images/load.gif"; ?>" /></div></td></tr>');
+																		$('#property_gallery_image_list').html('<tr><td colspan="10"> <div class="clearfix text-center" ><img  src="<? echo MAINSITE . "assets/admin/images/load.gif"; ?>" /></div></td></tr>');
 																		$.ajax({
 																			type: "POST",
-																			url: '<?= MAINSITE_Admin . 'catalog/Property-module/GetCompletePropertyGalleryImageListNewPos' ?>',
+																			url: '<?= MAINSITE_Admin . 'catalog/Property-module/get_property_gallery_image_list_new_pos' ?>',
 																			//dataType : "json",
-																			data: { "property_gallery_image_id": '<? echo $property_gallery_image_id; ?>', "property_id": '<? echo $property_id; ?>', 'podId': podId, "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>" },
+																			data: { "property_gallery_image_id": '<? echo $property_gallery_image_id; ?>', "property_id": '<? echo $id; ?>', 'podId': podId, "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>" },
 																			success: function (result) {
 																				// alert(result);
-																				$('#propertyGalleryImageList').html(result);
+																				$('#property_gallery_image_list').html(result);
 																				$(table).parent().find('.result').text("Order Changed Successfully");
 																				dragEvent();
 																			}
@@ -882,10 +896,17 @@ if (!empty($property_data)) {
 										<select type="text" class="form-control form-control-sm" required id="is_display" name="is_display">
 											<option value="">Select Display Status</option>
 
-											<option value="0">No
-											</option>
-											<option value="1">Yes
-											</option>
+											<?php foreach ($display_status_data as $item) {
+												$selected = "";
+												if ($item->value == $is_display) {
+													$selected = "selected";
+												}
+												?>
+												<option value="<?php echo $item->value ?>" <?php echo $selected ?>>
+													<?php echo $item->name ?>
+
+												</option>
+											<?php } ?>
 										</select>
 									</div>
 								</div>
@@ -958,6 +979,8 @@ if (!empty($property_data)) {
 </aside>
 
 
+
+
 <script src="https://cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
 <script>
 	window.addEventListener('load', function () {
@@ -971,6 +994,32 @@ if (!empty($property_data)) {
 			}
 		});
 	});
+</script>
+<!-- <script>
+	document.getElementById('slug_url').addEventListener('input', function () {
+		var slugInput = this;
+		var slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+		if (!slugPattern.test(slugInput.value)) {
+			toastrDefaultErrorFunc('Invalid Slug URL format. Only lowercase letters, numbers, and hyphens are allowed.');
+		}
+	});
+</script> -->
+<script>
+	function update_sale_duration() {
+		var saleType = document.getElementById('sale_type').value;
+		var saleDurationType = document.getElementById('sale_duration_type');
+
+		if (saleType == '3') { // Sale
+			saleDurationType.value = '3'; // Permanent Sale
+			saleDurationType.classList.add('readonly');
+			saleDurationType.onmousedown = function (e) { e.preventDefault(); }; // Prevent user interaction
+		} else {
+			saleDurationType.value = '';
+			saleDurationType.classList.remove('readonly');
+			saleDurationType.onmousedown = null; // Restore user interaction
+		}
+	}
 </script>
 <script>
 
@@ -1005,7 +1054,7 @@ if (!empty($property_data)) {
 				url: "<?php echo MAINSITE_Admin . 'catalog/Property_module/add_input_fields' ?>",
 				type: 'post',
 				dataType: "json",
-				data: { 'property_type_id': property_type_id, "id": <?= $id ?> "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>" },
+				data: { 'selected_property_type_id': property_type_id, "id": <?= $id ?>, "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>" },
 				success: function (response) {
 					$("#add_input_fields").html(response.html_data);
 				},
@@ -1023,7 +1072,7 @@ if (!empty($property_data)) {
 
 
 	function get_city(state_id, city_id = 0) {
-		// $("#city_id").html('');;
+		$("#city_id").html('');;
 		$("#location_id").html('');;
 
 		if (state_id > 0) {
@@ -1050,7 +1099,7 @@ if (!empty($property_data)) {
 
 
 	function get_location(city_id, location_id = 0) {
-		// $("#").html('');
+		$("#location_id").html('');
 		if (city_id > 0) {
 			Pace.restart();
 			$.ajax({
@@ -1078,24 +1127,7 @@ if (!empty($property_data)) {
 
 
 
-	// function get_city(state_id, city_id = 0) {
-	// 	$("#city_id").html('');
-	// 	if (state_id > 0) {
-	// 		Pace.restart();
-	// 		$.ajax({
-	// 			url: "<?php echo MAINSITE_Admin . 'Ajax/get_city' ?>",
-	// 			type: 'post',
-	// 			dataType: "json",
-	// 			data: { 'city_id': city_id, 'state_id': state_id, "<?php echo $csrf['name'] ?>": "<?php echo $csrf['hash'] ?>" },
-	// 			success: function (response) {
-	// 				$("#city_id").html(response.city_html);
-	// 			},
-	// 			error: function (request, error) {
-	// 				toastrDefaultErrorFunc("Unknown Error. Please Try Again");
-	// 			}
-	// 		});
-	// 	}
-	// }
+
 
 	window.addEventListener('load', function () {
 		<?php if (!empty($property_type_id) && !empty($property_sub_type_id)) { ?>
@@ -1110,14 +1142,11 @@ if (!empty($property_data)) {
 			get_city(<?php echo $state_id ?>, <?php echo $city_id ?>);
 		<?php } ?>
 		<?php if (!empty($location_id) && !empty($city_id)) { ?>
-			get_city(<?php echo $city_id ?>, <?php echo $location_id ?>);
+			get_location(<?php echo $city_id ?>, <?php echo $location_id ?>);
 		<?php } ?>
 
-
-
-
-
 	});
+
 </script>
 <script>
 	function validateForm() {
@@ -1309,9 +1338,9 @@ if (!empty($property_data)) {
 	/* <<<< ADDING MORE GALLERY FILES*/
 </script>
 <script>
-	require(['bootstrap-multiselect'], function (purchase) {
-		$('#mySelect').multiselect();
-	});
+	// require(['bootstrap-multiselect'], function (purchase) {
+	// 	$('#mySelect').multiselect();
+	// });
 </script>
 
 <script>
@@ -1363,71 +1392,4 @@ if (!empty($property_data)) {
 	} else {
 		alert("Your browser doesn't support to File API"); // Alert the user if the File API is not supported
 	}
-</script>
-<script>
-
-
-	// $(document).on("change", "#property_type_id", function (e) {
-
-
-	// 	$('#loader1').show();
-
-	// 	var property_type_id = $('#property_type_id').val();
-
-
-
-	// 	if (property_type_id > 0) {
-	// 		Pace.restart();
-	// 		$.ajax({
-	// 			url: "<?= MAINSITE_Admin . "catalog/Property_module/load_input_fields" ?>",
-	// 			type: 'post',
-	// 			dataType: "json",
-	// 			data: { 'property_type_id': property_type_id, "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>" },
-	// 			success: function (response) {
-	// 				$("#add_input_fields").html(response.html_data);
-
-	// 			},
-	// 			error: function (request, error) {
-	// 				toastrDefaultErrorFunc("Unknown Error. Please Try Again");
-	// 				$("#quick_view_model").html('Unknown Error. Please Try Again');
-	// 			}
-	// 		});
-	// 	}
-
-
-	// })
-
-
-
-	function add_input_fields(property_type_id) {
-		$("#add_input_fields").html('')
-		if (property_type_id > 0) {
-			Pace.restart();
-			$.ajax({
-				url: "<?php echo MAINSITE_Admin . 'Ajax/add_input_fields' ?>",
-				type: 'post',
-				dataType: "json",
-				data: { 'property_type_id': property_type_id, "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>" },
-				success: function (response) {
-					$("#add_input_fields").html(response.html_data);
-				},
-				error: function (request, error) {
-					toastrDefaultErrorFunc("Unknown Error. Please Try Again");
-				}
-			});
-		}
-	}
-
-	window.addEventListener('load', function () {
-		<?php if (!empty($property_type_id)) { ?>
-			add_input_fields(<?php echo $property_type_id ?>);
-		<?php } ?>
-
-
-
-
-
-
-
-	});
 </script>
