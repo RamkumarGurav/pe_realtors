@@ -52,6 +52,19 @@ class User_model extends CI_Model
     $this->db->join("location as l", "l.location_id = ft.location_id", "Left");
 
 
+
+    if (!empty($params['search_keyword'])) {
+      $search_keyword = $params['search_keyword'];
+      $this->db->group_start(); // Start grouping for OR conditions
+      $this->db->like('ci.city_name', $search_keyword);
+      $this->db->or_like('s.state_name', $search_keyword);
+      $this->db->or_like('l.location_name', $search_keyword);
+      $this->db->or_like('l.pincode', $search_keyword);
+      $this->db->group_end(); // End grouping for OR conditions
+    }
+
+
+
     // Conditional logic for ordering results
     if (!empty($params['order_by'])) {
       $this->db->order_by($params['order_by']);
@@ -87,6 +100,11 @@ class User_model extends CI_Model
     }
     if (!empty($params['gated_community_type_id'])) {
       $this->db->where("ft.gated_community_type_id", $params['gated_community_type_id']);
+    }
+
+
+    if (!empty($params['sale_type'])) {
+      $this->db->where("ft.sale_type", $params['sale_type']);
     }
 
 

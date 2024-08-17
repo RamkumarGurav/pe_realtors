@@ -24,11 +24,15 @@
                 <div class="rld-main-search">
                   <div class="row">
                     <div class="search-box">
-                      <input type="text" name="" id=""
-                        placeholder="City, Neighborhood, Address, Postal Code, School District">
-                      <a href="#" class="icon">
-                        <i class="fas fa-search"></i>
-                      </a>
+                      <form name="search_results_form" id="search_results_form" action="<?= MAINSITE ?>search-results"
+                        accept-charset="utf-8" autocomplete="off" enctype="multipart/form-data" method="POST">
+                        <input type="hidden" name="sale_type" value="">
+                        <input type="text" name="search_keyword" id="search_keyword"
+                          placeholder="City, Neighborhood, Address, Postal Code, School District">
+                        <button type="submit" class="icon">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -37,11 +41,15 @@
                 <div class="rld-main-search">
                   <div class="row">
                     <div class="search-box">
-                      <input type="text" name="" id=""
-                        placeholder="City, Neighborhood, Address, Postal Code, School District">
-                      <a href="##" class="icon">
-                        <i class="fas fa-search"></i>
-                      </a>
+                      <form name="search_results_form" id="search_results_form" action="<?= MAINSITE ?>search-results"
+                        accept-charset="utf-8" autocomplete="off" enctype="multipart/form-data" method="POST">
+                        <input type="hidden" name="sale_type" value="2">
+                        <input type="text" name="search_keyword" id="search_keyword"
+                          placeholder="City, Neighborhood, Address, Postal Code, School District">
+                        <button type="submit" class="icon">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </form>
                     </div>
                   </div>
                 </div>

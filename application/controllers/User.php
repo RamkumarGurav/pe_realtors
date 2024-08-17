@@ -72,12 +72,19 @@ class User extends Main
 
 
 
+    // if (isset($_POST['search_results_form_type'])) {
+    //   echo "<pre> <br>";
+    //   print_r($_POST);
+    //   exit;
+    // }
+
 
 
 
 
 
     $search = array();
+    $search_keyword = '';
     $field_name = '';
     $field_value = '';
 
@@ -119,7 +126,10 @@ class User extends Main
 
 
 
-
+    if (!empty($_REQUEST['search_keyword']))
+      $search_keyword = $_POST['search_keyword'];
+    else if (!empty($search_keyword))
+      $search_keyword = $search_keyword;
 
 
     if (!empty($_REQUEST['field_name']))
@@ -206,6 +216,7 @@ class User extends Main
 
 
 
+    $this->data['search_keyword'] = $search_keyword;
     $this->data['field_name'] = $field_name;
     $this->data['field_value'] = $field_value;
 
@@ -238,6 +249,7 @@ class User extends Main
 
     $this->data['is_negotiable'] = $is_negotiable;
 
+    $search['search_keyword'] = $search_keyword;
     $search['field_name'] = $field_name;
     $search['field_value'] = $field_value;
 
@@ -293,9 +305,6 @@ class User extends Main
 
 
 
-
-
-
     parent::get_header('header', $this->data);
     $this->load->view('search_results', $this->data);
     parent::get_footer('footer', $this->data);
@@ -316,10 +325,25 @@ class User extends Main
 
 
     $this->data['selected_property_type_id'] = $selected_property_type_id;
-    $this->data['property_age_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'property_age', 'where' => "id > 0", "order_by" => "name ASC"));
-    $this->data['facing_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'facing_type', 'where' => "id > 0", "order_by" => "name ASC"));
-    $this->data['bhk_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'bhk_type', 'where' => "id > 0", "order_by" => "name ASC"));
-    $this->data['gated_community_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'gated_community_type', 'where' => "id > 0", "order_by" => "name ASC"));
+    $this->data['property_age_data'] = $this->Common_model->get_data(array(
+      'select' => '*',
+      'from' => 'property_age',
+      'where' => "id > 0 and status = 1",
+      "order_by" => "name ASC"
+    ));
+    $this->data['facing_type_data'] = $this->Common_model->get_data(array(
+      'select' => '*',
+      'from' => 'facing_type',
+      'where' => "id > 0 and status = 1",
+      "order_by" => "name ASC"
+    ));
+    $this->data['bhk_type_data'] = $this->Common_model->get_data(array(
+      'select' => '*',
+      'from' => 'bhk_type',
+      'where' => "id > 0 and status = 1",
+      "order_by" => "name ASC"
+    ));
+    $this->data['gated_community_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'gated_community_type ', 'where' => "id > 0 and status = 1", "order_by" => "name ASC"));
 
 
 
