@@ -62,66 +62,44 @@
               <?php } ?>
             </select>
           </div>
-          <!--  <div class="col-lg-2">
-                                             <a class="primarybtn">Search</a>
-                                          </div> -->
-        </div>
-
-        <div class="row mt-4 align-items-center justify-content-center">
           <div class="col-lg col-6 mbb-5">
             <select type="text" class="form-control" id="property_sub_type_id" name="property_sub_type_id"
               style="width: 100%;">
               <option value="0">Property Sub Type</option>
             </select>
           </div>
-          <div class="col-lg col-6 mbb-5">
-            <select type="text" class="form-control" id="bhk_type_id" name="bhk_type_id" style="width: 100%;">
-              <option value="">BHK Type</option>
-              <?php foreach ($bhk_type_data as $bhk) {
-                $selected = "";
-                if ($bhk->id == $bhk_type_id) {
-                  $selected = "selected";
-                }
-                ?>
-                <option value="<?php echo $bhk->id ?>" <?php echo $selected ?>>
-                  <?php echo $bhk->name ?>
+          <!--  <div class="col-lg-2">
+                                             <a class="primarybtn">Search</a>
+                                          </div> -->
+        </div>
 
-                </option>
-              <?php } ?>
-            </select>
-          </div>
-          <div class="col-lg col-6 mbb-5">
-            <select type="text" class="form-control" id="door_facing_type_id" name="door_facing_type_id"
-              style="width: 100%;">
-              <option value="">Door Facing</option>
-              <?php foreach ($facing_type_data as $dft) {
-                $selected = "";
-                if ($dft->id == $door_facing_type_id) {
-                  $selected = "selected";
-                }
-                ?>
-                <option value="<?php echo $dft->id ?>" <?php echo $selected ?>>
-                  <?php echo $dft->name ?>
+        <div id="add_input_fields" class="row align-items-center justify-content-center">
+        </div>
 
-                </option>
-              <?php } ?>
-            </select>
-          </div>
+        <div class="row mt-4 align-items-center justify-content-center">
+
+
           <div class="col-lg col-6 mbb-5">
-            <select style="width: 100%">
+            <select class="form-control" style="width: 100%">
               <option>Appro Build up Area </option>
             </select>
           </div>
           <div class="col-lg col-6 mbb-5">
-            <select style="width: 100%">
+            <select class="form-control" style="width: 100%">
               <option>Price Range </option>
             </select>
           </div>
-          <div class="col-lg-2 col-6 mbb-5">
+
+        </div>
+
+        <div class="row mt-4 align-items-center justify-content-center">
+          <div>
             <button type="submit" class="searchbtn" style="width: 100%">Search</button>
           </div>
         </div>
       </form>
+
+
 
 
 
@@ -228,6 +206,24 @@
       });
     }
 
+
+    $("#add_input_fields").html('');
+    if (property_type_id > 0) {
+      console.log("add_input_fields")
+      $.ajax({
+        url: "<?php echo MAINSITE . 'add_input_fields' ?>",
+        type: 'post',
+        dataType: "json",
+        data: { 'selected_property_type_id': property_type_id, "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>" },
+        success: function (response) {
+          $("#add_input_fields").html(response.html_data);
+        },
+        error: function (request, error) {
+          toastrDefaultErrorFunc("Unknown Error. Please Try Again");
+        }
+      });
+    }
+
   }
 
 
@@ -246,7 +242,7 @@
 
     <?php if (!empty($property_type_id) && !empty($property_sub_type_id)) { ?>
       // If property_type_id and locatio$property_sub_type_id are not empty, call get_city function with these values.
-      get_location(<?php echo $property_type_id ?>, <?php echo $property_sub_type_id ?>);
+      get_property_sub_type(<?php echo $property_type_id ?>, <?php echo $property_sub_type_id ?>);
     <?php } ?>
 
   });

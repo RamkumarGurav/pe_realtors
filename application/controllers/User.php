@@ -302,7 +302,34 @@ class User extends Main
   }
 
 
+  function add_input_fields()
+  {
 
+
+
+
+    $selected_property_type_id = 0;
+    if (!empty($_POST['selected_property_type_id'])) {
+      $selected_property_type_id = $_POST['selected_property_type_id'];
+    }
+
+
+
+    $this->data['selected_property_type_id'] = $selected_property_type_id;
+    $this->data['property_age_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'property_age', 'where' => "id > 0", "order_by" => "name ASC"));
+    $this->data['facing_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'facing_type', 'where' => "id > 0", "order_by" => "name ASC"));
+    $this->data['bhk_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'bhk_type', 'where' => "id > 0", "order_by" => "name ASC"));
+    $this->data['gated_community_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'gated_community_type', 'where' => "id > 0", "order_by" => "name ASC"));
+
+
+
+    $html_data = $this->load->view('template/add_input_fields', $this->data, true);
+
+
+
+    echo json_encode(array("html_data" => $html_data));
+    die;
+  }
 
 
 

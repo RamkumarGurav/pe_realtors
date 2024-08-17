@@ -41,10 +41,10 @@ $feilds_details_data = [
     "bhk_type_id_prop" => 0,
     "plot_facing_type_id_prop" => 0,
     "door_facing_type_id_prop" => 0,
-    // "plot_dimension_sqft_prop" => 0,
-    // "built_up_area_prop" => 0,
-    // "in_acres_prop" => 0,
-    // "in_guntas_prop" => 0,
+    "plot_dimension_sqft_prop" => 0,
+    "built_up_area_prop" => 0,
+    "in_acres_prop" => 0,
+    "in_guntas_prop" => 0,
     "gated_community_type_id_prop" => 0,
   ],
   (object) [
@@ -53,10 +53,10 @@ $feilds_details_data = [
     "bhk_type_id_prop" => 0,
     "plot_facing_type_id_prop" => 0,
     "door_facing_type_id_prop" => 0,
-    // "plot_dimension_sqft_prop" => 0,
-    // "built_up_area_prop" => 0,
-    // "in_acres_prop" => 0,
-    // "in_guntas_prop" => 0,
+    "plot_dimension_sqft_prop" => 0,
+    "built_up_area_prop" => 0,
+    "in_acres_prop" => 0,
+    "in_guntas_prop" => 0,
     "gated_community_type_id_prop" => 0,
   ],
   (object) [
@@ -65,10 +65,10 @@ $feilds_details_data = [
     "bhk_type_id_prop" => 0,
     "plot_facing_type_id_prop" => 0,
     "door_facing_type_id_prop" => 2,
-    // "plot_dimension_sqft_prop" => 2,
-    // "built_up_area_prop" => 2,
-    // "in_acres_prop" => 0,
-    // "in_guntas_prop" => 0,
+    "plot_dimension_sqft_prop" => 2,
+    "built_up_area_prop" => 2,
+    "in_acres_prop" => 0,
+    "in_guntas_prop" => 0,
     "gated_community_type_id_prop" => 0,
 
   ],
@@ -78,10 +78,10 @@ $feilds_details_data = [
     "bhk_type_id_prop" => 2,
     "plot_facing_type_id_prop" => 2,
     "door_facing_type_id_prop" => 2,
-    // "plot_dimension_sqft_prop" => 2,
-    // "built_up_area_prop" => 2,
-    // "in_acres_prop" => 0,
-    // "in_guntas_prop" => 0,
+    "plot_dimension_sqft_prop" => 2,
+    "built_up_area_prop" => 2,
+    "in_acres_prop" => 0,
+    "in_guntas_prop" => 0,
     "gated_community_type_id_prop" => 1,
 
   ],
@@ -92,10 +92,10 @@ $feilds_details_data = [
     "bhk_type_id_prop" => 0,
     "plot_facing_type_id_prop" => 0,
     "door_facing_type_id_prop" => 0,
-    // "plot_dimension_sqft_prop" => 0,
-    // "built_up_area_prop" => 0,
-    // "in_acres_prop" => 2,
-    // "in_guntas_prop" => 2,
+    "plot_dimension_sqft_prop" => 0,
+    "built_up_area_prop" => 0,
+    "in_acres_prop" => 2,
+    "in_guntas_prop" => 2,
     "gated_community_type_id_prop" => 0,
 
   ],
@@ -106,10 +106,10 @@ $feilds_details_data = [
     "bhk_type_id_prop" => 0,
     "plot_facing_type_id_prop" => 2,
     "door_facing_type_id_prop" => 2,
-    // "plot_dimension_sqft_prop" => 2,
-    // "built_up_area_prop" => 2,
-    // "in_acres_prop" => 0,
-    // "in_guntas_prop" => 0,
+    "plot_dimension_sqft_prop" => 2,
+    "built_up_area_prop" => 2,
+    "in_acres_prop" => 0,
+    "in_guntas_prop" => 0,
     "gated_community_type_id_prop" => 0,
 
   ],
@@ -121,10 +121,10 @@ $feilds_details_data = [
     "bhk_type_id_prop" => 0,
     "plot_facing_type_id_prop" => 2,
     "door_facing_type_id_prop" => 0,
-    // "plot_dimension_sqft_prop" => 2,
-    // "built_up_area_prop" => 2,
-    // "in_acres_prop" => 0,
-    // "in_guntas_prop" => 0,
+    "plot_dimension_sqft_prop" => 2,
+    "built_up_area_prop" => 2,
+    "in_acres_prop" => 0,
+    "in_guntas_prop" => 0,
     "gated_community_type_id_prop" => 0,
 
   ],
@@ -135,10 +135,10 @@ $feilds_details_data = [
     "bhk_type_id_prop" => 2,
     "plot_facing_type_id_prop" => 2,
     "door_facing_type_id_prop" => 2,
-    // "plot_dimension_sqft_prop" => 0,
-    // "built_up_area_prop" => 2,
-    // "in_acres_prop" => 0,
-    // "in_guntas_prop" => 0,
+    "plot_dimension_sqft_prop" => 0,
+    "built_up_area_prop" => 2,
+    "in_acres_prop" => 0,
+    "in_guntas_prop" => 0,
     "gated_community_type_id_prop" => 2,
 
   ],
@@ -149,10 +149,10 @@ $feilds_details_data = [
     "bhk_type_id_prop" => 2,
     "plot_facing_type_id_prop" => 2,
     "door_facing_type_id_prop" => 2,
-    // "plot_dimension_sqft_prop" => 2,
-    // "built_up_area_prop" => 2,
-    // "in_acres_prop" => 0,
-    // "in_guntas_prop" => 0,
+    "plot_dimension_sqft_prop" => 2,
+    "built_up_area_prop" => 2,
+    "in_acres_prop" => 0,
+    "in_guntas_prop" => 0,
     "gated_community_type_id_prop" => 0,
 
   ],
@@ -163,10 +163,10 @@ $feilds_details_data = [
     "bhk_type_id_prop" => 0,
     "plot_facing_type_id_prop" => 2,
     "door_facing_type_id_prop" => 0,
-    // "plot_dimension_sqft_prop" => 2,
-    // "built_up_area_prop" => 0,
-    // "in_acres_prop" => 0,
-    // "in_guntas_prop" => 0,
+    "plot_dimension_sqft_prop" => 2,
+    "built_up_area_prop" => 0,
+    "in_acres_prop" => 0,
+    "in_guntas_prop" => 0,
     "gated_community_type_id_prop" => 0,
 
   ],
@@ -458,7 +458,7 @@ $feilds_details_data = [
     <?php endif; ?>
 
 
-
+    <!--
     <?php if ($row->plot_dimension_sqft_prop == 2): ?>
       <div class="col-md-4 col-sm-6 mb-3">
         <label for="name" class="col-sm-12 label_content px-2 py-0">Plot Dimension in Sqft <span
@@ -488,7 +488,7 @@ $feilds_details_data = [
 
 
 
-    <?php if ($row->built_up_area_prop == 2): ?>
+     <?php if ($row->built_up_area_prop == 2): ?>
       <div class="col-md-4 col-sm-6 ">
         <label for="name" class="col-sm-12 label_content px-2 py-0">Built Up Area <span
             style="color:#f00;font-size: 22px;margin-top: 3px;">*</span></label>
@@ -565,7 +565,8 @@ $feilds_details_data = [
 
     <?php else: ?>
       <input type="hidden" name="in_guntas" id="in_guntas" value="" />
-    <?php endif; ?>
+    <?php endif; ?> 
+    -->
 
 
 

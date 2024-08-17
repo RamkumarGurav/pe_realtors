@@ -58,6 +58,7 @@ $route['translate_uri_dashes'] = TRUE;
 
 
 $route['search-results'] = 'user/search_results';
+$route['add_input_fields'] = 'user/add_input_fields';
 $route['property-details/(:any)'] = 'user/property_details/$1';
 // $route['products/(:any)/(:any)'] = 'products/$1/$2';
 
