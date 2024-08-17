@@ -25,10 +25,10 @@
       <div id="wrapper">
          <header id="header-container" class="header head-tr">
             <!-- Header -->
-            <div id="header" class="head-tr bottom">
+            <div id="navbar_top" class="head-tr bottom">
                <div class="container container-header">
                   <!-- Left Side Content -->
-                  <div class="row">
+                  <div class="row align-items-center justify-content-center">
                      <div class="col-lg-4">
                         <!-- Logo -->
                         <div id="logo">
@@ -37,27 +37,41 @@
                      </div>
                      <div class="col-lg-8">
                         <!-- Mobile Navigation -->
-                        <div class="mmenu-trigger">
+                        <!-- <div class="mmenu-trigger">
                            <button class="hamburger hamburger--collapse" type="button">
                            <span class="hamburger-box">
                            <span class="hamburger-inner"></span>
                            </span>
                            </button>
-                        </div>
+                        </div> -->
                         <!-- Main Navigation -->
-                        <nav id="navigation" class="style-1 head-tr">
-                           <ul id="responsive">
-                              <!-- <li><a href="index.html">Home</a></li> -->
-                              <li><a class="" href="#">Search Landing Page</a>
-                              </li>
-                              
-                              <!-- <li><a href="services.html">Services</a>
-                              </li>
-                              <li><a href="testimonials.html">Testimonials</a>
-                              </li>
-                              <li><a href="contact-us.html">Contact Us</a></li> -->
-                           </ul>
-                        </nav>
+                      <nav class="navbar sticky-top navbar-expand-lg style-1 head-tr" id="navigation">
+                        <div class="container">
+                           <!-- <a class="navbar-brand" href="#">Logo</a> -->
+                           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                           <i class="fas fa-bars"></i>
+                           </button>
+                           <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                              <ul class="navbar-nav mr-auto w-100 justify-content-end">
+                                 <li class="nav-item active">
+                                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                                 </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="#company-and-values">Company & Values</a>
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="#services">Services</a>
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="#testimonials">Testimonials</a>
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="#faqs">FAQs</a>
+                                 </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="contact-us.html">Contact Us</a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </nav>
                         <!-- Main Navigation / End -->
                      </div>
                   </div>
@@ -89,58 +103,43 @@
                </div>
              </div>
              <div class="row mt-4">
-               <div class="col-lg-4">
+               <div class="col-lg-8">
                   <h6><strong>Property Details</strong> | <span>Location</span></h6>
                </div>
                 <div class="col-lg-4">
-                  <div class="float-right">
-               <img src="assets/images/call.png" style="max-width: 25px"> &nbsp;Call Our Consultant
+                  <div class="float-right" style="color:#f55d2c;font-style: italic;">
+               &nbsp;Reach out to our consultant for more details
             </div>
             </div>
-             <div class="col-lg-4">
+            <!--  <div class="col-lg-4">
                <div class="float-right">
                <img src="assets/images/whatsapp.png" style="max-width: 30px"> Chat With our Consultant
             </div>
-            </div>
+            </div> -->
              </div>
              <hr style="border-top: 1px solid rgb(216 158 41) !important;">
              <div class="row">
                 <div class="col-lg-12">
-               <h2>Rs 1.7 Cr <span style="font-size: 12px;color: #000">Negotiable</span></h2>
+               <h2>Rs 1.7 Cr <span style="color:#f55d2c;    font-family: 'Lato', sans-serif;
+    font-size: 12px;font-weight: 500;">Negotiable</span></h2>
                <p>FLAT for SALE : 3-BHK Flat | SBU - 1,400 Sq ft<br>
 with UDS - Sq ft | BBMP A-Khatha</p>
+
+                                 <a href="" style="color:#000 !important;text-decoration: none !important">   <span href="#" class="btn pdy" style=""><i class="fab fa-youtube"></i></span> &nbsp;Youtube</a>
+                                   
+
             </div>
              </div>
              <hr style="border-top: 1px solid rgb(216 158 41) !important;">
-             <div class="row">
-               <div class="col-lg-4">
-                  <h2>If Assistance needed Please submit your requirement</h2>
+             <div class="row align-items-center justify-content-center">
+               <div class="col-lg-8">
+                  <h2 class="prop-head">If Assistance needed Please submit your requirement <a href="index.html#form-sec" class="assistbtn " value="Submit Now" style="    background: #d89e29 !important;"> Submit Now</a></h2>
                </div>
                <div class="col-lg-4">
-                  <form method="get" class="searchP">
-        
-       
-         <div class="filter-item1 ">
-         <input type="text" placeholder="Name" style="    width: 100%;">
-         </div>
-        
-         <div class="filter-item1 ">
-         <input type="text" placeholder="Contact" style="    width: 100%;">
-         </div>
-
-         <div class="filter-item1 ">
-         <input type="email" placeholder="Email Id" style="    width: 100%;">
-         </div>
-       
-          <div class="filter-item1 ">
-         <textarea placeholder="Requirement" style="height: 150px;width: 100%;"></textarea>
-         </div>
-       
-        
-         <div class="filter-item">
-         <input type="submit" class="button alt mb-0" value="Submit Now" style="    background: #d89e29 !important;">
-         </div>
-         </form>
+                  
+         
+         
+    
                </div>
              </div>
             </div>
@@ -170,9 +169,11 @@ with UDS - Sq ft | BBMP A-Khatha</p>
                                  <li><a href="company-and-values.html">Company & Values</a>
                               </li>
                               
-                              <li><a href="services.html">Services</a>
+                              <li><a href="index.html#services">Services</a>
                               </li>
-                              <li><a href="testimonials.html">Testimonials</a>
+                              <li><a href="index.html#testimonials">Testimonials</a>
+                              </li>
+                              <li><a href="index.html#faqs">FAQs</a>
                               </li>
                               <li><a href="contact-us.html">Contact Us</a></li>
                               </ul>
@@ -266,9 +267,19 @@ with UDS - Sq ft | BBMP A-Khatha</p>
          <script src="assets/js/jquery.themepunch.tools.min.js"></script>
          <script src="assets/js/jquery.themepunch.revolution.min.js"></script>
          <script>
-            $(window).on('scroll load', function() {
-                $("#header.cloned #logo img").attr("src", $('#header #logo img').attr('data-sticky-logo'));
-            });
+           if ($(window).width() > 992) {
+  $(window).scroll(function(){  
+     if ($(this).scrollTop() > 40) {
+        $('#navbar_top').addClass("fixed-top");
+        // add padding top to show content behind navbar
+        $('body').css('padding-top', $('.navbar').outerHeight() + 'px');
+      }else{
+        $('#navbar_top').removeClass("fixed-top");
+         // remove padding top from body
+        $('body').css('padding-top', '0');
+      }   
+  });
+} 
             
          </script>
          <script>

@@ -23,9 +23,12 @@
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <!-- <a href="<? echo _lte_files_ ?>index2.html"><?php echo _project_complete_name_ ?></a> -->
-      <!-- <img src="<?php echo MAINSITE . "assets/images/logo.png" ?>" style="height:150px"> -->
-      <img src="<?= IMAGE ?>logo-2.png" style="height:100px;width:auto;">
+      <?php if (!empty($company_logo_file_name)): ?>
+        <img src="<?= _uploaded_files_ ?>company_profile/logo/<?= $company_logo_file_name ?>"
+          style="height:100px;width:auto;">
+      <?php else: ?>
+        <img src="<?= IMAGE_ADMIN ?>logo.jpg" style="height:100px;width:auto;">
+      <?php endif; ?>
     </div>
     <!-- /.login-logo -->
     <div class="card">

@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-include ('Main.php');
+include('Main.php');
 class Ajax extends main
 {
 
@@ -57,47 +57,90 @@ class Ajax extends main
 		echo $show;
 	}
 
+
+
+
 	function get_city()
 	{
-		$state_id = $_POST['state_id'];
-		$city_id = $_POST['city_id'];
-		$city = $this->Ajax_model->get_city(array("state_id" => $state_id));
-		$show = "<option value=''>Select City</option>";
-		if (!empty($state_id)) {
-			if (!empty($city)) {
-				foreach ($city as $c) {
-					$selected = '';
-					if ($c->city_id == $city_id)
-						$selected = 'selected';
-					$show .= "<option $selected value='$c->city_id'>$c->city_name</option>";
+		$state_id = $city_id = '0';
+		if (!empty($_POST['city_id'])) {
+			$city_id = $_POST['city_id'];
+		}
+		if (!empty($_POST['state_id'])) {
+			$state_id = $_POST['state_id'];
+		}
+
+		$city_data = $this->Common_model->get_data(array('select' => '*', 'from' => 'city', 'where' => "state_id = $state_id and status = 1", "order_by" => "city_name ASC"));
+		$result = '<option value="">Select City</option>';
+		if (!empty($city_data)) {
+			foreach ($city_data as $r) {
+				$if_block = $selected = '';
+				if ($r->city_id == $city_id) {
+					$selected = "selected";
 				}
+
+				$result .= '<option value="' . $r->city_id . '" ' . $selected . '>' . $r->city_name . '</option>';
 			}
 		}
-		echo $show;
+		echo json_encode(array("city_html" => $result, "city_json" => $city_data));
+	}
+
+
+	function get_location()
+	{
+		$location_id = $city_id = '0';
+		if (!empty($_POST['city_id'])) {
+			$city_id = $_POST['city_id'];
+		}
+		if (!empty($_POST['location_id'])) {
+			$location_id = $_POST['location_id'];
+		}
+
+		$location_data = $this->Common_model->get_data(array('select' => '*', 'from' => 'location', 'where' => "city_id = $city_id and status=1", "order_by" => "location_name ASC"));
+		$result = '<option value="">Select Location</option>';
+		if (!empty($location_data)) {
+			foreach ($location_data as $r) {
+				$if_block = $selected = '';
+				if ($r->location_id == $location_id) {
+					$selected = "selected";
+				}
+
+				$result .= '<option value="' . $r->location_id . '" ' . $selected . '>' . $r->location_name . '</option>';
+			}
+		}
+		echo json_encode(array("location_html" => $result, "location_json" => $location_data));
 	}
 
 	function get_property_sub_type()
 	{
 
-	
-		$property_type_id = $_POST['property_type_id'];
-		$property_sub_type_id = '';
+
+		$property_sub_type_id = $property_type_id = '0';
+		if (!empty($_POST['property_type_id'])) {
+			$property_type_id = $_POST['property_type_id'];
+		}
 		if (!empty($_POST['property_sub_type_id'])) {
 			$property_sub_type_id = $_POST['property_sub_type_id'];
 		}
-		$property_sub_type_data = $this->Ajax_model->get_property_sub_type_data(array("property_type_id" => $property_type_id));
-		$show = "<option value=''>Select Property Sub Type</option>";
-		if (!empty($property_type_id)) {
-			if (!empty($property_sub_type_data)) {
-				foreach ($property_sub_type_data as $item) {
-					$selected = '';
-					if ($item->id == $property_sub_type_id)
-						$selected = 'selected';
-					$show .= "<option $selected value='$item->id'>$item->name</option>";
+
+		$property_sub_type_data = $this->Common_model->get_data(array(
+			'select' => '*',
+			'from' => 'property_sub_type',
+			'where' => "property_type_id = $property_type_id and status = 1",
+			"order_by" => "name ASC"
+		));
+		$result = '<option value="">Property Sub Type</option>';
+		if (!empty($property_sub_type_data)) {
+			foreach ($property_sub_type_data as $r) {
+				$if_block = $selected = '';
+				if ($r->id == $property_sub_type_id) {
+					$selected = "selected";
 				}
+
+				$result .= '<option value="' . $r->id . '" ' . $selected . '>' . $r->name . '</option>';
 			}
 		}
-		echo $show;
+		echo json_encode(array("property_sub_type_html" => $result, "property_sub_type_json" => $property_sub_type_data));
 	}
 
 

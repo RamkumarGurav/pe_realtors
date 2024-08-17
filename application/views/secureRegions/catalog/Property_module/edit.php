@@ -106,25 +106,25 @@ if (!empty($property_data)) {
 
 
 
-	$display_status_data = [
-		(object) ["name" => "No", "value" => 0],
-		(object) ["name" => "Yes", "value" => 1],
-	];
-	$sale_type_data = [
-		(object) ["name" => "Rent", "value" => 1],
-		(object) ["name" => "Lease", "value" => 2],
-		(object) ["name" => "Sale", "value" => 3],
-	];
-	$sale_duration_type_data = [
-		(object) ["name" => "Monthly", "value" => 1],
-		(object) ["name" => "Yearly", "value" => 2],
-		(object) ["name" => "Permanent Sale", "value" => 3],
-	];
 
 }
 
 
 
+$display_status_data = [
+	(object) ["name" => "No", "value" => 0],
+	(object) ["name" => "Yes", "value" => 1],
+];
+$sale_type_data = [
+	(object) ["name" => "Rent", "value" => 1],
+	(object) ["name" => "Lease", "value" => 2],
+	(object) ["name" => "Sale", "value" => 3],
+];
+$sale_duration_type_data = [
+	(object) ["name" => "Monthly", "value" => 1],
+	(object) ["name" => "Yearly", "value" => 2],
+	(object) ["name" => "Permanent Sale", "value" => 3],
+];
 
 
 ?>
@@ -538,6 +538,7 @@ if (!empty($property_data)) {
 											onchange="update_sale_duration()">
 											<option value="">Select Sale Type</option>
 
+
 											<?php foreach ($sale_type_data as $item) {
 												$selected = "";
 												if ($item->value == $sale_type) {
@@ -853,7 +854,8 @@ if (!empty($property_data)) {
 																			type: "POST",
 																			url: '<?= MAINSITE_Admin . 'catalog/Property-module/get_property_gallery_image_list_new_pos' ?>',
 																			//dataType : "json",
-																			data: { "property_gallery_image_id": '<? echo $property_gallery_image_id; ?>', "property_id": '<? echo $id; ?>', 'podId': podId, "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>" },
+																			data: { "property_gallery_image_id": '<? echo $property_gallery_image_id; ?>',
+																				 "property_id": '<? echo $id; ?>', 'podId': podId, "<?= $csrf['name'] ?>": "<?= $csrf['hash'] ?>" },
 																			success: function (result) {
 																				// alert(result);
 																				$('#property_gallery_image_list').html(result);

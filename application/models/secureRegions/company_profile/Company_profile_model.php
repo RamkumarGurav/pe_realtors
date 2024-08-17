@@ -25,6 +25,8 @@ class Company_profile_model extends CI_Model
 
 	function get_company_profile_data($params = array())
 	{
+
+
 		$result = ''; // Initialize result variable
 
 		if (!empty($params['search_for'])) { // Check if search_for parameter is set
@@ -38,9 +40,9 @@ class Company_profile_model extends CI_Model
 
 
 		$this->db->from("company_profile as ft"); // Select from company_profile table
-		$this->db->join("country as c", "c.country_id = ft.country_id"); // Join country table
-		$this->db->join("state as s", "s.state_id = ft.state_id"); // Join state table
-		$this->db->join("city as ci", "ci.city_id = ft.city_id"); // Join city table
+		$this->db->join("country as c", "c.country_id = ft.country_id", "Left"); // Join country table
+		$this->db->join("state as s", "s.state_id = ft.state_id", "Left"); // Join state table
+		$this->db->join("city as ci", "ci.city_id = ft.city_id", "Left"); // Join city table
 
 		// Conditional logic for ordering results
 		if (!empty($params['order_by'])) {

@@ -646,6 +646,61 @@ class Property_module extends Main
 		parent::get_footer();
 	}
 
+
+
+
+	function add_input_fields()
+	{
+
+
+		$this->data['page_type'] = "list";
+		$user_access = $this->data['user_access'] = $this->data['User_auth_obj']->check_user_access(array("module_id" => $this->data['page_module_id']));
+
+
+
+
+		$id = 0;
+		if (!empty($_POST['id'])) {
+			$id = $_POST['id'];
+		}
+		$selected_property_type_id = 0;
+		if (!empty($_POST['selected_property_type_id'])) {
+			$selected_property_type_id = $_POST['selected_property_type_id'];
+		}
+
+
+
+		$this->data['id'] = $id;
+		$this->data['selected_property_type_id'] = $selected_property_type_id;
+		$this->data['property_age_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'property_age', 'where' => "id > 0", "order_by" => "name ASC"));
+		$this->data['facing_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'facing_type', 'where' => "id > 0", "order_by" => "name ASC"));
+		$this->data['bhk_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'bhk_type', 'where' => "id > 0", "order_by" => "name ASC"));
+		$this->data['gated_community_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'gated_community_type', 'where' => "id > 0", "order_by" => "name ASC"));
+
+		if (!empty($id)) {
+			$this->data['property_data'] = $this->Property_model->get_property_data(array("id" => $id));
+			if (empty($this->data['property_data'])) {
+				$this->session->set_flashdata('alert_message', '<div class="alert alert-danger alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<i class="icon fas fa-ban"></i> Record Not Found. 
+				  </div>');
+				REDIRECT(MAINSITE_Admin . $user_access->class_name . '/' . $user_access->function_name);
+			}
+			$this->data['property_data'] = $this->data['property_data'][0];
+		}
+
+		$html_data = $this->load->view('secureRegions/catalog/Property_module/template/add_input_fields', $this->data, true);
+
+
+
+		echo json_encode(array("html_data" => $html_data));
+		die;
+	}
+
+
+
+
+
 	//using
 	//method that actually adds new property or updates the existing property
 	function do_edit()
@@ -658,7 +713,7 @@ class Property_module extends Main
 
 		// Validate essential form fields; if empty, set an error message and redirect
 		if (
-			empty($_POST['name']) && empty($_POST['property_type_id']) && empty($_POST['property_sub_type_id']) && empty($_POST['property_age_id'])
+			empty($_POST['name']) && empty($_POST['property_type_id']) && empty($_POST['property_sub_type_id'])
 			&& empty($_POST['state_id']) && empty($_POST['city_id']) && empty($_POST['location_id'])
 			&& empty($_POST['sale_type']) && empty($_POST['sale_duration_type']) && empty($_POST['sale_amount'])
 			&& empty($_POST['description']) && empty($_POST['other_details']) && empty($_POST['cover_image_title'])
@@ -927,54 +982,6 @@ class Property_module extends Main
 		echo json_encode(array("template" => $template));
 	}
 
-
-
-	function add_input_fields()
-	{
-
-
-		$this->data['page_type'] = "list";
-		$user_access = $this->data['user_access'] = $this->data['User_auth_obj']->check_user_access(array("module_id" => $this->data['page_module_id']));
-
-
-
-
-		$id = 0;
-		if (!empty($_POST['id'])) {
-			$id = $_POST['id'];
-		}
-		$selected_property_type_id = 0;
-		if (!empty($_POST['selected_property_type_id'])) {
-			$selected_property_type_id = $_POST['selected_property_type_id'];
-		}
-
-
-
-		$this->data['id'] = $id;
-		$this->data['selected_property_type_id'] = $selected_property_type_id;
-		$this->data['facing_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'facing_type', 'where' => "id > 0", "order_by" => "name ASC"));
-		$this->data['bhk_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'bhk_type', 'where' => "id > 0", "order_by" => "name ASC"));
-		$this->data['gated_community_type_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'gated_community_type', 'where' => "id > 0", "order_by" => "name ASC"));
-
-		if (!empty($id)) {
-			$this->data['property_data'] = $this->Property_model->get_property_data(array("id" => $id));
-			if (empty($this->data['property_data'])) {
-				$this->session->set_flashdata('alert_message', '<div class="alert alert-danger alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<i class="icon fas fa-ban"></i> Record Not Found. 
-				  </div>');
-				REDIRECT(MAINSITE_Admin . $user_access->class_name . '/' . $user_access->function_name);
-			}
-			$this->data['property_data'] = $this->data['property_data'][0];
-		}
-
-		$html_data = $this->load->view('secureRegions/catalog/Property_module/template/add_input_fields', $this->data, true);
-
-
-
-		echo json_encode(array("html_data" => $html_data));
-		die;
-	}
 
 
 

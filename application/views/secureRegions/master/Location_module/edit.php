@@ -135,9 +135,9 @@ if (!empty($location_data)) {
 							<div class="form-group row">
 								<div class="col-lg-3 col-md-4 col-sm-6">
 									<label for="inputEmail3" class="col-sm-12 label_content px-2 py-0">Pincode <span
-											style="color:#f00;font-size: 22px;margin-top: 3px;">*</span></label>
+											style="color:#f00;font-size: 22px;margin-top: 3px;"></span></label>
 									<div class="col-sm-10">
-										<input type="number" class="form-control form-control-sm" id="pincode" required name="pincode"
+										<input type="number" class="form-control form-control-sm" id="pincode" name="pincode"
 											value="<?php echo $pincode ?>" placeholder="Pincode">
 									</div>
 								</div>

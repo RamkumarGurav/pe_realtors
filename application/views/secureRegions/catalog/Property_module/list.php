@@ -288,14 +288,15 @@
                                                 <td><?php echo $item->location_name . ", " . $item->pincode . ", " . $item->city_name . ", " . $item->state_name ?>
                                                 </td>
                                                 <td><?php echo $item->property_age_name ?></td>
+
                                                 <td>
-                                                    <?php if ($item->is_display == 1) { ?> <i
+                                                    <?php if ($item->is_negotiable == 1) { ?> <i
                                                             class="fas fa-check btn-success btn-sm "></i>
                                                     <?php } else { ?><i class="fas fa-ban btn-danger btn-sm "></i>
                                                     <?php } ?>
                                                 </td>
                                                 <td>
-                                                    <?php if ($item->is_negotiable == 1) { ?> <i
+                                                    <?php if ($item->is_display == 1) { ?> <i
                                                             class="fas fa-check btn-success btn-sm "></i>
                                                     <?php } else { ?><i class="fas fa-ban btn-danger btn-sm "></i>
                                                     <?php } ?>

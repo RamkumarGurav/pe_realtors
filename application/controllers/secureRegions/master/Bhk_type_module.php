@@ -352,7 +352,7 @@ class Bhk_type_module extends Main
 
 
 		if (!empty($is_exist)) {
-			$alert_message = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-ban"></i> Bhk_type already exist in database.</div>';
+			$alert_message = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-ban"></i> BHK Type already exist in database.</div>';
 			$this->session->set_flashdata('alert_message', $alert_message);
 			//echo $this->session->flashdata('alert_message' );
 			//echo "anubhav";

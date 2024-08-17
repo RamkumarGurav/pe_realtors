@@ -71,17 +71,17 @@ if (!empty($admin_user_data)) {
 								echo "active";
 							} ?>" href="#tab_user_name" data-toggle="tab">User Name</a></li>
 							<? /* ?><li class="nav-item dropdown">
-																														<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
-																															Dropdown <span class="caret"></span>
-																														</a>
-																														<div class="dropdown-menu">
-																															<a class="dropdown-item" tabindex="-1" href="#">Action</a>
-																															<a class="dropdown-item" tabindex="-1" href="#">Another action</a>
-																															<a class="dropdown-item" tabindex="-1" href="#">Something else here</a>
-																															<div class="dropdown-divider"></div>
-																															<a class="dropdown-item" tabindex="-1" href="#">Separated link</a>
-																														</div>
-																													</li><? */ ?>
+																																			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+																																				Dropdown <span class="caret"></span>
+																																			</a>
+																																			<div class="dropdown-menu">
+																																				<a class="dropdown-item" tabindex="-1" href="#">Action</a>
+																																				<a class="dropdown-item" tabindex="-1" href="#">Another action</a>
+																																				<a class="dropdown-item" tabindex="-1" href="#">Something else here</a>
+																																				<div class="dropdown-divider"></div>
+																																				<a class="dropdown-item" tabindex="-1" href="#">Separated link</a>
+																																			</div>
+																																		</li><? */ ?>
 						</ul>
 					</div><!-- /.card-header -->
 					<div class="card-body">
@@ -93,154 +93,155 @@ if (!empty($admin_user_data)) {
 									<tbody>
 										<tr>
 											<td>
+												<strong class="full">Data Base Id</strong>
+												<?php echo $admin_user_data->admin_user_id ?>
+											</td>
+											<td>
 												<strong class="full">Role</strong>
-												<?
-												if (count($admin_user_data->roles) > 1) {
-													?>
-													<table id="" class="table table-bordered table-hover">
-														<tbody>
+												<?php if (count($admin_user_data->roles) > 1) { ?>
+													<table class="table table-hover text-nowrap" style="width:90%">
+														<thead>
 															<tr>
-																<th>#</th>
-																<th>Company Name</th>
-																<th>Role</th>
+																<th style="width: 10px">#</th>
+																<th>Company</th>
+																<th>Role </th>
 															</tr>
-															<? $r_count = 0;
-															foreach ($admin_user_data->roles as $r) {
-																$r_count++; ?>
+														</thead>
+														<tbody>
+															<?php $c_count = 0;
+															foreach ($admin_user_data->roles as $role) {
+																$c_count++; ?>
 																<tr>
-																	<td><?= $r_count ?></td>
-																	<td><?= $r->admin_user_role_name ?></td>
-																	<td><?= $r->company_unique_name ?></td>
+																	<td><?php echo $c_count ?>.</td>
+																	<td><?php echo $role->company_unique_name ?></td>
+																	<td><?php echo $role->admin_user_role_name ?></td>
 																</tr>
-															<? } ?>
+															<?php } ?>
 														</tbody>
 													</table>
-													<?
-
-												} else {
-													echo $admin_user_data->roles[0]->admin_user_role_name;
-
-												}
-												?>
-
+												<?php } else {
+													$role = $admin_user_data->roles[0]; ?>
+													<?php echo $role->admin_user_role_name ?>
+												<?php } ?>
 											</td>
 											<td>
 												<strong class="full">Designation</strong>
-												<?= $admin_user_data->designation_name ?>
+												<?php echo $admin_user_data->designation_name ?>
 											</td>
 											<td>
-												<strong class="full">Employee Name</strong>
-												<?= $admin_user_data->admin_user_name ?>
-											</td>
-											<td>
-												<strong class="full">Email Id</strong>
-												<?= $admin_user_data->email ?>
-											</td>
-											<td>
-												<strong class="full">Mobile No</strong>
-												<?= $admin_user_data->mobile_no ?>
-											</td>
-										</tr>
-
-										<tr>
-											<td rowspan="2" colspan="2">
-												<strong class="full">Address</strong>
-												<? echo $admin_user_data->address1;
-												if (!empty($admin_user_data->address1)) {
-													echo "<br>" . $admin_user_data->address2;
-												}
-												if (!empty($admin_user_data->address3)) {
-													echo "<br>" . $admin_user_data->address3;
-												}
-												echo "<br>" . $admin_user_data->city_name . " ($admin_user_data->pincode) ";
-												echo "<br>" . $admin_user_data->state_name;
-												echo "<br>" . $admin_user_data->country_name . " ($admin_user_data->dial_code) ";
-												?>
-											</td>
-											<td>
-												<strong class="full">Alt Mobile No</strong>
-												<?= $admin_user_data->alt_mobile_no ?>
-											</td>
-
-											<td>
-												<strong class="full">Country</strong>
-												<?= $admin_user_data->country_name ?>
-											</td>
-
-											<td>
-												<strong class="full">Data View</strong>
-												<? if ($admin_user_data->data_view == 1) { ?> Yes <i
-														class="fas fa-check btn-success btn-sm "></i>
-												<? } else { ?> No <i class="fas fa-ban btn-danger btn-sm "></i>
-												<? } ?></
- td>
-										</tr>
-										<tr>
-											<td>
-												<strong class="full">Joining Date</strong>
-												<? if (!empty($admin_user_data->joining_data)) {
-													echo date("d-m-Y", strtotime($admin_user_data->joining_data));
+												<strong class="full">Joining Date1</strong>
+												<?php if (!empty($admin_user_data->joining_date)) {
+													echo date("d-m-Y", strtotime($admin_user_data->joining_date));
 												} else {
 													echo "-";
 												} ?>
 											</td>
 											<td>
 												<strong class="full">Termination By</strong>
-												<? if (!empty($admin_user_data->termination_date) && $admin_user_data->termination_date != '0000-00-00' && $admin_user_data->termination_date != '01-01-1970' && $admin_user_data->termination_date != '1970-01-01') {
+												<?php if (!empty($admin_user_data->termination_date) && $admin_user_data->termination_date != '0000-00-00' && $admin_user_data->termination_date != '01-01-1970' && $admin_user_data->termination_date != '1970-01-01') {
 													echo date("d-m-Y", strtotime($admin_user_data->termination_date));
 												} else {
 													echo "-";
 												} ?>
 											</td>
-											<td colspan="3">
-												<strong class="full">Files</strong>
-												<? if (!empty($admin_user_data->files)) { ?>
-													<ol>
-														<? foreach ($admin_user_data->files as $f) { ?>
-															<li><?= $f->file_title ?> &nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank"
-																	href="<?= base_url() . 'assets/employee_file/' . $f->file_name ?>">View</a></li>
-														<? } ?>
-													</ol>
 
-												<? } else { ?>-<? } ?>
+
+										</tr>
+
+										<tr>
+											<td>
+												<strong class="full">Employee Name</strong>
+												<?php echo $admin_user_data->admin_user_name ?>
 											</td>
+											<td>
+												<strong class="full">Password</strong>
+												<?php echo $admin_user_data->show_password ?>
+											</td>
+											<td>
+												<strong class="full">Email Id</strong>
+												<?php echo $admin_user_data->email ?>
+											</td>
+											<td colspan="4">
+												<strong class="full">Address</strong>
+												<?php echo $admin_user_data->address1;
+												if (!empty($admin_user_data->address1)) {
+													echo ", " . $admin_user_data->address2;
+												}
+												if (!empty($admin_user_data->address3)) {
+													echo ", " . $admin_user_data->address3;
+												}
+												echo ", " . $admin_user_data->city_name . " ($admin_user_data->pincode) ";
+												echo ", " . $admin_user_data->state_name;
+												echo ", " . $admin_user_data->country_name . " ($admin_user_data->dial_code) ";
+												?>
+											</td>
+
+
 										</tr>
 										<tr>
 											<td>
-												<strong class="full">Data View</strong>
-												<? if ($admin_user_data->approval_access == 1) { ?> Yes <i
-														class="fas fa-check btn-success btn-sm "></i>
-												<? } else { ?> No <i class="fas fa-ban btn-danger btn-sm "></i>
-												<? } ?></
- td>
+												<strong class="full">Country</strong>
+												<?php echo $admin_user_data->country_name ?>
+											</td>
 											<td>
-												<strong class="full">Last Login IP</strong>
-												<?= $admin_user_data->last_loginip ?>
+												<strong class="full">Mobile No</strong>
+												<?php echo $admin_user_data->mobile_no ?>
+											</td>
+											<td>
+												<strong class="full">Alt Mobile No</strong>
+												<?php echo $admin_user_data->alt_mobile_no ?>
+											</td>
+											<td>
+												<strong class="full">Fax No</strong>
+												<?php echo $admin_user_data->fax_no ?>
 											</td>
 
 
+
+											<td>
+												<strong class="full">Files</strong>
+												<?php if (!empty($admin_user_data->files)) { ?>
+													<ol>
+														<?php foreach ($admin_user_data->files as $f) { ?>
+															<li><?php echo $f->file_title ?> &nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank"
+																	href="<?php echo _uploaded_files_ . 'admin_user_file/' . $f->file_name ?>">View</a></li>
+														<?php } ?>
+													</ol>
+
+												<?php } else { ?>-<?php } ?>
+											</td>
+										</tr>
+										<tr>
+
+											<td>
+												<strong class="full">Last Login IP</strong>
+												<?php echo $admin_user_data->last_loginip ?>
+											</td>
 											<td>
 												<strong class="full">Last Login On</strong>
-												<? if (!empty($admin_user_data->last_login)) {
+												<?php if (!empty($admin_user_data->last_login)) {
 													echo date("d-m-Y h:i:s A", strtotime($admin_user_data->last_login));
 												} else {
 													echo "-";
 												} ?>
 											</td>
-										</tr>
-
-										<tr>
 											<td>
 												<strong class="full">Added On</strong>
-												<?= date("d-m-Y h:i:s A", strtotime($admin_user_data->added_on)) ?>
+												<?php echo date("d-m-Y h:i:s A", strtotime($admin_user_data->added_on)) ?>
 											</td>
 											<td>
 												<strong class="full">Added By</strong>
-												<?= $admin_user_data->added_by_name ?>
+												<?php echo $admin_user_data->added_by_name ?>
 											</td>
+
+										</tr>
+
+
+
+										<tr>
 											<td>
 												<strong class="full">Updated On</strong>
-												<? if (!empty($admin_user_data->updated_on)) {
+												<?php if (!empty($admin_user_data->updated_on)) {
 													echo date("d-m-Y h:i:s A", strtotime($admin_user_data->updated_on));
 												} else {
 													echo "-";
@@ -248,24 +249,25 @@ if (!empty($admin_user_data)) {
 											</td>
 											<td>
 												<strong class="full">Updated By</strong>
-												<? if (!empty($admin_user_data->updated_by_name)) {
+												<?php if (!empty($admin_user_data->updated_by_name)) {
 													echo $admin_user_data->updated_by_name;
 												} else {
 													echo "-";
 												} ?>
 											</td>
-											<td>
+											<td colspan="3">
 												<strong class="full">Status</strong>
-												<? if ($admin_user_data->status == 1) { ?> Active <i
+												<?php if ($admin_user_data->status == 1) { ?> Active <i
 														class="fas fa-check btn-success btn-sm "></i>
-												<? } else { ?> Block <i class="fas fa-ban btn-danger btn-sm "></i>
-												<? } ?></
- td>
+												<?php } else { ?> Block <i class="fas fa-ban btn-danger btn-sm "></i>
+												<?php } ?>
+											</td>
 										</tr>
 
 									</tbody>
 
 								</table>
+
 							</div>
 							<!-- /.tab-pane -->
 							<div class="tab-pane <? if ($tab_type == 'password') {

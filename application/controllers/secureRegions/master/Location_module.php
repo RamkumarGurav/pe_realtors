@@ -366,7 +366,7 @@ class Location_module extends Main
 
 
 		// Validate essential form fields; if empty, set an error message and redirect
-		if (empty($_POST['location_name']) && empty($_POST['pincode']) && empty($_POST['city_id']) && empty($_POST['state_id'])) {
+		if (empty($_POST['location_name']) && empty($_POST['city_id']) && empty($_POST['state_id'])) {
 			$alert_message = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close"
 							data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-ban"></i> Something Went Wrong. Please Try Again.</div>';
 			$this->session->set_flashdata('alert_message', $alert_message);

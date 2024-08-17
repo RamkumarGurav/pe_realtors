@@ -1,144 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
+<?
+$CI =& get_instance();
+if (empty($meta_title)) {
+   $meta_title = _project_name_;
+}
+
+if (empty($meta_description)) {
+   $meta_description = _project_name_;
+}
+
+if (empty($meta_keywords)) {
+   $meta_keywords = _project_name_;
+}
+
+if (empty($meta_others)) {
+   $meta_others = "";
+}
+
+
+
+?>
+
+
+
+<!doctype html>
+<html class="no-js" lang="zxx">
 
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta charset="utf-8">
+   <meta http-equiv="x-ua-compatible" content="ie=edge">
+   <meta name="description" content="">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
    <base href="<?= base_url() ?>">
    <meta property="og:type" content="object" />
-   <meta property="og:site_name" content="<?= _project_name_for_web_title_ ?>" />
+   <meta property="og:site_name" content="<?= _project_complete_name_ ?>" />
    <title><?= $meta_title ?></title>
    <meta name="description" content="<?= $meta_description ?>">
    <meta name="keywords" content="<?= $meta_keywords ?>">
-   <link rel="shortcut icon" type="image/x-icon" href="<?= IMAGE ?>logo-2.png">
-   <link rel="stylesheet" href="<?php echo CSS ?>main.css">
-   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <style>
-      body {
-         background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
-         min-height: 100vh;
-         display: flex;
-         flex-direction: column;
-         font-family: 'Arial', sans-serif;
-      }
+   <meta name="GOOGLEBOT" content="index,follow" />
+
+   <meta name="distribution" content="global" />
+
+   <link rel="shortcut icon" type="image/x-icon" href="<?= IMAGE ?>favicon.ico">
 
 
-      .navbar-brand img {
-         height: 90px;
-      }
+   <!-- GOOGLE FONTS -->
+   <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i%7CMontserrat:600,800, 700"
+      rel="stylesheet">
+   <!-- FONT AWESOME -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <!-- ARCHIVES CSS -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-      .content-wrapper {
-         flex: 1;
-         display: flex;
-         align-items: center;
+   <?php if (!empty($direct_css)) {
+      foreach ($direct_css as $dcss) {
+         echo '<link rel="stylesheet" href="' . $dcss . '"  crossorigin="anonymous">';
       }
+   } ?>
+   <?php if (!empty($css)) {
+      foreach ($css as $css) {
+         echo '<link rel="stylesheet" href="' . CSS . $css . '"  crossorigin="anonymous">';
+      }
+   } ?>
 
-      .container {
-         padding: 2rem 0;
-      }
-
-      .card {
-         border: none;
-         border-radius: 1rem;
-         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-         overflow: hidden;
-      }
-
-      .card-header {
-         background: linear-gradient(to right, #4a00e0, #8e2de2);
-         color: white;
-         font-weight: bold;
-         text-transform: uppercase;
-         letter-spacing: 0.1em;
-         border-bottom: none;
-         padding: 1.5rem;
-      }
-
-      .form-control {
-         border-radius: 0.5rem;
-         padding: 0.75rem 1rem;
-      }
-
-      .btn-primary {
-         background: linear-gradient(to right, #4a00e0, #8e2de2);
-         border: none;
-         border-radius: 0.5rem;
-         padding: 0.75rem 2rem;
-         font-weight: bold;
-         letter-spacing: 0.05em;
-         transition: all 0.3s ease;
-      }
-
-      .btn-primary:hover {
-         transform: translateY(-3px);
-         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
-      }
-
-      .footer {
-         background: linear-gradient(to right, #4a00e0, #8e2de2);
-         color: white;
-         padding: 2rem 0;
-         margin-top: auto;
-      }
-
-      .footer a {
-         color: #ffffff;
-         text-decoration: none;
-         transition: all 0.3s ease;
-      }
-
-      .footer a:hover {
-         color: #84fab0;
-      }
-
-      .footer-icons {
-         font-size: 1.5rem;
-      }
-
-      .footer-icons a {
-         margin: 0 10px;
-      }
-
-      .nav-con.container {
-         padding: 0;
-      }
-
-      a.nav-link {
-         font-size: 17px;
-         font-weight: 700;
-         background: #ffebc5;
-         padding: 9px 17px 9px 20px;
-         border-radius: 2px;
-         color: black !important;
-      }
-   </style>
+   <link rel="stylesheet" href="<?= CSS ?>owl.carousel.min.css">
+   <link rel="stylesheet" href="<?= CSS ?>bootstrap.min.css">
+   <link rel="stylesheet" href="<?= CSS ?>menu.css">
+   <link rel="stylesheet" href="<?= CSS ?>slick.css">
+   <link rel="stylesheet" href="<?= CSS ?>style.css">
 </head>
 
-<body>
-   <section>
-      <div class="nav-con container">
-         <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="<?= MAINSITE ?>">
-               <div>
-                  <img src="<?= IMAGE ?>logo-2.png" alt="">
+<body class="th-18">
+   <div id="wrapper">
+      <header id="header-container" class="header head-tr">
+         <!-- Header -->
+         <div id="navbar_top" class="head-tr bottom">
+            <div class="container container-header">
+               <!-- Left Side Content -->
+               <div class="row align-items-center justify-content-center">
+                  <div class="col-lg-4">
+                     <!-- Logo -->
+                     <div id="logo">
+                        <a href="<?= MAINSITE ?>"><img src="<?= IMAGE ?>logo.png"
+                              data-sticky-logo="<?= IMAGE ?>logo.png" alt=""></a>
+                     </div>
+                  </div>
+                  <div class="col-lg-8">
+                     <!-- Mobile Navigation -->
+                     <!-- <div class="mmenu-trigger">
+                           <button class="hamburger hamburger--collapse" type="button">
+                           <span class="hamburger-box">
+                           <span class="hamburger-inner"></span>
+                           </span>
+                           </button>
+                        </div> -->
+                     <!-- Main Navigation -->
+                     <nav class="navbar sticky-top navbar-expand-lg style-1 head-tr" id="navigation">
+                        <div class="container">
+                           <!-- <a class="navbar-brand" href="#">Logo</a> -->
+                           <button class="navbar-toggler" type="button" data-toggle="collapse"
+                              data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                              aria-expanded="false" aria-label="Toggle navigation">
+                              <i class="fas fa-bars"></i>
+                           </button>
+                           <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                              <ul class="navbar-nav mr-auto w-100 justify-content-end">
+                                 <li class="nav-item active">
+                                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                                 </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="#company-and-values">Company & Values</a>
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="#services">Services</a>
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="#testimonials">Testimonials</a>
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="#faqs">FAQs</a>
+                                 </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="contact-us">Contact Us</a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </nav>
+                     <!-- Main Navigation / End -->
+                  </div>
                </div>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-               <ul class="navbar-nav ml-auto">
-                  <li class="nav-item active">
-                     <a class="nav-link" href="<?= MAINSITE ?>"><i class="fas fa-home mr-2"></i>Home</a>
-                  </li>
-
-               </ul>
+               <!-- Left Side Content / End -->
             </div>
-         </nav>
-      </div>
-   </section>
+         </div>
+         <!-- Header / End -->
+      </header>
+      <div class="clearfix"></div>

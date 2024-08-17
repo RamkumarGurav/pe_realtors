@@ -28,6 +28,7 @@ class Main extends CI_Controller
 		$this->load->model('Common_model');
 		$this->load->model('secureRegions/Admin_common_model');
 		$this->load->model('secureRegions/Admin_model');
+		$this->load->model('secureRegions/company_profile/Company_profile_model');
 
 
 
@@ -77,6 +78,19 @@ class Main extends CI_Controller
 
 	function get_header()
 	{
+
+
+		$this->data['company_logo_file_name'] = "";
+		$this->data['company_profile_data_for_logo'] = $this->Company_profile_model->get_company_profile_data(array("company_profile_id" => $this->session->userdata('session_company_profile_id'), "details" => 1));
+
+		if (!empty($this->data['company_profile_data_for_logo'])) {
+			$this->data['company_profile_data_for_logo'] = $this->data['company_profile_data_for_logo'][0];
+			$this->data['company_logo_file_name'] = $this->data['company_profile_data_for_logo']->logo;
+		}
+
+
+
+
 		$this->load->view('secureRegions/inc/header', $this->data);
 	}
 

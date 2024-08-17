@@ -1,7 +1,4 @@
 <?php
-$page_module_name = "City";
-?>
-<?php
 $city_name = "";
 $city_code = "";
 $city_id = 0;
@@ -16,8 +13,8 @@ if (!empty($city_data)) {
 	$city_name = $city_data->city_name;
 	$city_code = $city_data->city_code;
 	$status = $city_data->status;
-	// $country_id = $city_data->country_id;
-	$country_id = 1;
+	$country_id = $city_data->country_id;
+	// $country_id = 1;
 	$state_id = $city_data->state_id;
 	$is_display = $city_data->is_display;
 
@@ -82,22 +79,25 @@ if (!empty($city_data)) {
 									<label for="inputEmail3" class="col-sm-12 label_content px-2 py-0">State <span
 											style="color:#f00;font-size: 22px;margin-top: 3px;">*</span></label>
 									<div class="col-sm-10">
-										<select type="text" class="form-control form-control-sm" required id="state_id" name="state_id">
+
+										<select type="text" class="form-control" id="state_id" name="state_id" style="width: 100%;">
 											<option value="">Select State</option>
-											<?php foreach ($state_data as $cd) {
+											<?php foreach ($state_data as $item) {
 												$selected = "";
-												if ($cd->state_id == $state_id) {
+												if ($item->state_id == 1) {
 													$selected = "selected";
 												}
 												?>
-												<option value="<?php echo $cd->state_id ?>" <?php echo $selected ?>>
-													<?php echo $cd->state_name ?>
-													<?php if ($cd->status != 1) {
+												<option value="<?php echo $item->state_id ?>" <?php echo $selected ?>>
+													<?php echo $item->state_name ?>
+													<?php if ($item->status != 1) {
 														echo " [Block]";
 													} ?>
 												</option>
 											<?php } ?>
 										</select>
+
+
 									</div>
 								</div>
 
@@ -220,32 +220,6 @@ if (!empty($city_data)) {
 		return true;
 	}
 
-	function get_city(country_id, state_id = 0) {
-		$('#loader1').show();
-		$("#state_id").html('');
-		if (country_id > 0) {
-			Pace.restart();
-			$.ajax({
-				url: "<?php echo MAINSITE_Admin . 'Ajax/get_city' ?>",
-				type: 'post',
-				dataType: "json",
-				data: { 'country_id': country_id, 'state_id': state_id, "<?php echo $csrf['name'] ?>": "<?php echo $csrf['hash'] ?>" },
-				success: function (response) {
-					$("#state_id").html(response.state_html);
-				},
-				error: function (request, error) {
-					toastrDefaultErrorFunc("Unknown Error. Please Try Again");
-					$("#quick_view_model").html('Unknown Error. Please Try Again');
-				}
-			});
-		}
 
-	}
-
-	<?php if (!empty($country_id) && !empty($state_id)) { ?>
-		window.addEventListener('load', function () {
-			get_city(<?php echo $country_id ?>, <?php echo $state_id ?>)
-		})
-	<?php } ?>
 
 </script>

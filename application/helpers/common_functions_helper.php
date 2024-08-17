@@ -12,6 +12,30 @@ function get_clean_text($data = '')
 }
 
 
+function truncate_text($text, $maxLength = 100)
+{
+	// Check if the text length is greater than the maximum allowed length
+	if (strlen($text) > $maxLength) {
+		// Truncate the text and add ellipsis
+		$text = substr($text, 0, $maxLength) . '...';
+	}
+	return $text;
+}
+
+function split_sentance_for_heading($sentence)
+{
+	$words = explode(' ', $sentence);
+	$totalWords = count($words);
+	$midpoint = ceil($totalWords / 2);
+
+	// Join the words for each part
+	$part1 = implode(' ', array_slice($words, 0, $midpoint));
+	$part2 = implode(' ', array_slice($words, $midpoint));
+
+	return [$part1, $part2];
+}
+
+
 function is_valid_slug_url($slug_url)
 {
 	// Check if the slug contains only lowercase letters, numbers, and hyphens
@@ -294,6 +318,21 @@ function getIndianCurrency($number)
 
 }
 
+
+function indian_currence_in_lakhs_cr($amount)
+{
+	if ($amount >= 10000000) {
+		// Amount in Crores
+		$formattedAmount = number_format($amount / 10000000, 1) . ' Cr';
+	} elseif ($amount >= 100000) {
+		// Amount in Lakhs
+		$formattedAmount = number_format($amount / 100000, 1) . ' Lakh';
+	} else {
+		// Amount less than 1 Lakh, return as is with commas
+		$formattedAmount = number_format($amount);
+	}
+	return $formattedAmount;
+}
 
 
 ?>

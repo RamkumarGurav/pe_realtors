@@ -96,7 +96,8 @@
 <?php  */ ?>
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
-        <?php  /*?> <!-- Messages Dropdown Menu -->
+        <?php
+        /*?> <!-- Messages Dropdown Menu -->
 <li class="nav-item dropdown">
 <a class="nav-link" data-toggle="dropdown" href="#">
 <i class="far fa-comments"></i>
@@ -185,12 +186,13 @@ Nora Silvester
 
         <li class="nav-item dropdown user-menu ">
           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-            <?php if (!empty($logo_file_name)): ?>
-              <img src="<?= _uploaded_files_ ?>company_logo/<?= $logo_file_name ?>"
+            <?php if (!empty($company_logo_file_name)): ?>
+              <img src="<?= _uploaded_files_ ?>company_profile/logo/<?= $company_logo_file_name ?>"
                 class="user-image img-circle elevation-2">
             <?php else: ?>
               <img src="<?= IMAGE_ADMIN ?>logo.jpg" class="user-image img-circle elevation-2">
             <?php endif; ?>
+
             <span class="d-none d-md-inline"><?php echo $user_data->admin_user_name ?></span>
           </a>
 
@@ -198,9 +200,9 @@ Nora Silvester
     border-radius: 5%;">
             <!-- User image -->
             <li class="user-header ">
-              <?php if (!empty($logo_file_name)): ?>
-                <img src="<?= _uploaded_files_ ?>company_logo/<?= $logo_file_name ?>" style="height:100px;width:auto;"
-                  class="img-circle elevation-2" alt="User Image" alt="User Image">
+              <?php if (!empty($company_logo_file_name)): ?>
+                <img src="<?= _uploaded_files_ ?>company_profile/logo/<?= $company_logo_file_name ?>"
+                  style="height:100px;width:auto;" class="img-circle elevation-2" alt="User Image" alt="User Image">
               <?php else: ?>
                 <img src="<?= IMAGE_ADMIN ?>logo.jpg" style="height:100px;width:auto;" class="img-circle elevation-2"
                   alt="User Image" alt="User Image">

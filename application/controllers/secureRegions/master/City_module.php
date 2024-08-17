@@ -88,7 +88,7 @@ class City_module extends Main
 		$end_date = '';
 		$start_date = '';
 		$record_status = "";
-		$country_id = "";
+		$country_id = 1;
 		$state_id = "";
 
 		if (!empty($_REQUEST['field_name']))
@@ -171,6 +171,7 @@ class City_module extends Main
 		$search['offset'] = $offset;
 
 		$this->data['country_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'country', 'where' => "country_id > 0", "order_by" => "country_name ASC"));
+		$this->data['state_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'state', 'where' => "country_id = '$country_id'", "order_by" => "state_name ASC"));
 		$this->data['city_data'] = $this->City_model->get_city_data($search);
 
 		parent::get_header();
@@ -308,6 +309,7 @@ class City_module extends Main
 	//method that loads the view of add city and update city page
 	function edit($city_id = "")
 	{
+		$country_id = 1;
 		$this->data['page_type'] = "list";
 		$user_access = $this->data['user_access'] = $this->data['User_auth_obj']->check_user_access(array("module_id" => $this->data['page_module_id']));
 
@@ -331,7 +333,9 @@ class City_module extends Main
 
 
 		$this->data['country_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'country', 'where' => "country_id > 0", "order_by" => "country_name ASC"));
-		$this->data['state_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'state', 'where' => "state_id > 0", "order_by" => "state_name ASC"));
+		$this->data['state_data'] = $this->Common_model->get_data(array('select' => '*', 'from' => 'state', 'where' => "country_id = '$country_id'", "order_by" => "state_name ASC"));
+
+
 
 		// Assigning additional data for the view
 		$this->data['page_is_master'] = $this->data['user_access']->is_master;//this is for making left menu active
@@ -349,6 +353,8 @@ class City_module extends Main
 			}
 			$this->data['city_data'] = $this->data['city_data'][0];
 		}
+
+
 
 		parent::get_header();
 		parent::get_left_nav();

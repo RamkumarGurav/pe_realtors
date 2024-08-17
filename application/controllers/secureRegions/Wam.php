@@ -218,8 +218,15 @@ class Wam extends Main
 
 		}
 
+
+
+
 		$this->data['admin_user_data'] = $this->Admin_user_model->get_admin_user_data(array("admin_user_id" => $this->data['session_auid'], 'details' => 1));
+
 		$this->data['admin_user_data'] = $this->data['admin_user_data'][0];
+
+
+
 
 		parent::get_header();
 		parent::get_left_nav();

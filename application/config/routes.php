@@ -56,58 +56,36 @@ $route['404_override'] = 'User/pageNotFound';
 $route['translate_uri_dashes'] = TRUE;
 
 
-$route['forgot-password'] = 'secure_regions/Login/forgot_password';
-$route['Signup'] = 'User/registration';
-$route['forgot_password'] = 'Login/forgot_password';
-$route['reset_password/(:any)'] = 'Login/reset_password/$1';
-$route['secure_regions/admin_reset_password/(:any)'] = 'secure_regions/Login/admin_reset_password/$1';
 
-$route['employee-attendance'] = 'user/employee_attendance';
+$route['search-results'] = 'user/search_results';
+$route['property-details/(:any)'] = 'user/property_details/$1';
+// $route['products/(:any)/(:any)'] = 'products/$1/$2';
 
-// $route['employee-login'] = 'user/user_employee_login';
-$route['ajax_user_employee_do_login'] = 'user/ajax_user_employee_do_login';
-$route['employee-login-success'] = 'user/user_employee_login_success';
-// $route['employee-login-error'] = 'user/user_employee_login_error';
+$route['contact-us'] = 'user/contact_us';
+$route['about-us'] = 'user/about_us';
+$route['clients'] = 'user/clients';
+$route['thank-you'] = 'user/thank_you';
+$route['error'] = 'user/error';
 
-// $route['employee-logout'] = 'user/user_employee_logout';
-$route['ajax_user_employee_do_logout'] = 'user/ajax_user_employee_do_logout';
-$route['employee-logout-success'] = 'user/user_employee_logout_success';
-// $route['employee-logout-error'] = 'user/user_employee_logut_error';
-
-$route['test_home'] = 'user/test_home';
-$route['test_employee_attendance'] = 'user/test_employee_attendance';
-$route['test_login_success'] = 'user/test_login_success';
-$route['test_logout_success'] = 'user/test_logout_success';
-$route['test_access_denied'] = 'user/test_access_denied';
-
-// $route['employee'] = 'user/';
-// $route['contact'] = 'user/contact';
-// $route['ajax_insert_user_employee_login'] = 'user/ajax_insert_user_employee_login';
+// $route['testp'] = 'user/testp';
+// $route['test1'] = 'user/test1';
+// $route['test2'] = 'user/test2';
+// $route['test3'] = 'user/test3';
+$route['do_enquiry'] = 'user/do_enquiry';
+// $route['ajax_insert_enquiry'] = 'user/ajax_insert_enquiry';
+// $route['ajax_insert_career_enquiry'] = 'user/ajax_insert_career_enquiry';
 // $route['ajax_insert_user_employee_logout'] = 'user/ajax_insert_user_employee_logout';
 $route['access-denied'] = 'user/access_denied';
-$route['test1p'] = 'user/test1p';
+$route['test1'] = 'user/test1';
 
 
 
-$route[__changePassword__] = 'user/change_password';
-$route[__dashboard__] = 'Dashboard';
 
-
-$route['profile'] = "user/profile";
-$route[__forgotPassword__] = 'user/forgot-password';
 
 $route['404found'] = "user/found404";
 
 
 
-$route['getState'] = 'Ajax/getState';
-$route['getCity'] = 'Ajax/getCity';
-
-
-$route[__login__] = 'Login';
-$route[__login__ . '/loginAuth'] = 'Login/loginAuth';
-
-$route[__logout__] = 'user/logout';
 
 
 

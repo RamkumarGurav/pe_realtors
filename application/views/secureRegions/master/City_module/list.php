@@ -1,8 +1,3 @@
-<?php
-
-$page_module_name = "City";
-
-?>
 <!-- /.navbar -->
 
 <!-- Main Sidebar Container -->
@@ -82,32 +77,31 @@ $page_module_name = "City";
                                     </div>
 
                                     <div class="row">
-                                        <!-- <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Country</label>
-                                                    <select type="text" class="form-control" id="country_id"
-                                                        name="country_id" onchange="get_state(this.value ,0)"
-                                                        style="width: 100%;">
-                                                        <option value="">Select Country</option>
-                                                        <?php foreach ($country_data as $cd) {
-                                                            $selected = "";
-                                                            if ($cd->country_id == $country_id) {
-                                                                $selected = "selected";
-                                                            }
-                                                            ?>
-                                                            <option value="<?php echo $cd->country_id ?>" <?php echo $selected ?>>
-                                                                <?php echo $cd->country_name ?>
-                                                                <?php if ($cd->status != 1) {
-                                                                    echo " [Block]";
-                                                                } ?>
-                                                            </option>
-                                                        <?php } ?>
-                                                    </select>
-
-                                                </div>
-                                            </div> -->
-                                        <!-- /.col -->
                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>State</label>
+                                                <select type="text" class="form-control" id="state_id" name="state_id"
+                                                    style="width: 100%;">
+                                                    <option value="">Select State</option>
+                                                    <?php foreach ($state_data as $item) {
+                                                        $selected = "";
+                                                        if ($item->state_id == $state_id) {
+                                                            $selected = "selected";
+                                                        }
+                                                        ?>
+                                                        <option value="<?php echo $item->state_id ?>" <?php echo $selected ?>>
+                                                            <?php echo $item->state_name ?>
+                                                            <?php if ($item->status != 1) {
+                                                                echo " [Block]";
+                                                            } ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!-- /.col -->
+                                        <!-- <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>State</label>
                                                 <select type="text" class="form-control" id="state_id" name="state_id"
@@ -116,7 +110,7 @@ $page_module_name = "City";
                                                 </select>
 
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
 
                                     <div class="row">

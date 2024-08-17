@@ -22,7 +22,7 @@ class Login extends CI_Controller
 		//models
 		$this->load->model('Common_model');
 		$this->load->model('secureRegions/Login_model');
-
+		$this->load->model('secureRegions/company_profile/Company_profile_model');
 		//session data
 		$session_auid = $this->data['session_auid'] = $this->session->userdata('session_auid');
 		$this->data['session_auname'] = $this->session->userdata('session_auname');
@@ -48,6 +48,14 @@ class Login extends CI_Controller
 	 */
 	function index()
 	{
+
+		$this->data['company_logo_file_name'] = "";
+		$this->data['company_profile_data'] = $this->Company_profile_model->get_company_profile_data(array("details" => 1));
+		if (!empty($this->data['company_profile_data'])) {
+			$this->data['company_profile_data'] = $this->data['company_profile_data'][0];
+			$this->data['company_logo_file_name'] = $this->data['company_profile_data']->logo;
+		}
+
 
 
 
@@ -146,6 +154,13 @@ class Login extends CI_Controller
 
 	public function forgot_password()
 	{
+		$this->data['company_logo_file_name'] = "";
+		$this->data['company_profile_data'] = $this->Company_profile_model->get_company_profile_data(array("details" => 1));
+		if (!empty($this->data['company_profile_data'])) {
+			$this->data['company_profile_data'] = $this->data['company_profile_data'][0];
+			$this->data['company_logo_file_name'] = $this->data['company_profile_data']->logo;
+		}
+
 		$this->load->view('secureRegions/forgot_password', $this->data);
 	}
 
@@ -183,7 +198,7 @@ class Login extends CI_Controller
 
 		$this->db
 			->select('u.*')
-			->from('admin as u ')
+			->from('admin_user as u ')
 			->where("(email = '$username' or username = '$username')")
 			->limit(1);
 		$result = $this->db->get();
@@ -226,6 +241,13 @@ class Login extends CI_Controller
 	}
 	public function admin_reset_password($token)
 	{
+		$this->data['company_logo_file_name'] = "";
+		$this->data['company_profile_data'] = $this->Company_profile_model->get_company_profile_data(array("details" => 1));
+		if (!empty($this->data['company_profile_data'])) {
+			$this->data['company_profile_data'] = $this->data['company_profile_data'][0];
+			$this->data['company_logo_file_name'] = $this->data['company_profile_data']->logo;
+		}
+
 		$this->data['admin_password_reset_token_details'] = $admin_password_reset_token_details = $this->Common_model->get_data_bsnl(array('select' => '*', 'from' => 'admin_password_reset_token', 'where' => "token = '" . $token . "'"));
 		$admin_id = $admin_password_reset_token_details[0]->admin_id;
 		$used = $admin_password_reset_token_details[0]->used;
@@ -252,6 +274,7 @@ class Login extends CI_Controller
 		} else {
 			$this->data['token'] = $token;
 			$this->data['user_details'] = $user_details = $this->Common_model->get_data(array('select' => '*', 'from' => 'admin', 'where' => "admin_id = '" . $admin_id . "'"));
+
 
 			$this->load->view('secureRegions/reset_password', $this->data);
 			$this->data['token'] = $token;

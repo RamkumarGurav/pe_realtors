@@ -355,7 +355,7 @@ class Property_sub_type_module extends Main
 		//	echo $this->db->last_query();
 		//	print_r($is_exist);
 		if (!empty($is_exist)) {
-			$alert_message = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-ban"></i> This Record already exist in database.</div>';
+			$alert_message = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-ban"></i> Property Sub Type Record already exist in database.</div>';
 			$this->session->set_flashdata('alert_message', $alert_message);
 			//echo $this->session->flashdata('alert_message' );
 			//echo "anubhav";

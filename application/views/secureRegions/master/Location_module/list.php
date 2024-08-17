@@ -1,4 +1,4 @@
-<div?php $page_module_name="Location" ; ?>
+<div>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
@@ -22,6 +22,7 @@
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
+
         <!-- /.content-header -->
 
         <!-- Main content -->
